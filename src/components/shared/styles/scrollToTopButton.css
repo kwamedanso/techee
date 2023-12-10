@@ -1,0 +1,30 @@
+.scroll-to-top-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    bottom: 15px ;
+    right: 15px ;
+
+    background-color: white;
+    border: 1px solid var(--light-gray);
+    padding: 10px 8px;
+    border-radius: 10px;
+
+    z-index: 5;
+}
+
+.scroll-to-top-button:hover{
+    
+}
+
+.scroll-to-top-button svg{
+    font-size: 2rem;
+}
+
+@media screen and (min-width: 600px) {
+    .scroll-to-top-button{
+        padding: 5px;
+    }
+}

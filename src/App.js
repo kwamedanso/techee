@@ -4,6 +4,7 @@ import Header from "components/shared/header/Header";
 import { Route, Routes } from "react-router-dom";
 import privateRoutes from "routes";
 import Context from "context";
+import ScrollToTopButton from "components/shared/ScrollToTopButton";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
   return (
     <>
       <Context.Provider value={value}>
+        <ScrollToTopButton />
         <Header />
         <Routes>
           {privateRoutes.map(route => <Route key={route.path} path={route.path} element={route.element} />)}
