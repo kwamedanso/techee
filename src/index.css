@@ -1,13 +1,297 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root{
+  /* Colors */
+  --primary-blue: #2C90ED;
+  --deep-blue: #0063c0;
+  --white: #fff;
+  --dark-gray: #222222;
+  --light-gray: #E1E4E9;
+  --light-gray-hover: rgb(211, 211, 211);
+  --star-rating: #ffbe3d;
+
+
+  /* Font Weight */
+  --fw-thin: 300;
+  --fw-regular: 400;
+  --fw-semi-bold: 500;
+  --fw-bold: 600;
+  --fw-black: 900;
+
+
+  /* Sizes */
+  --size-10: .2rem;
+  --size-50: .35rem;
+  --size-100: 0.7rem;
+  --size-150: 0.85rem;
+  --size-200: 1rem;
+  --size-250: 1.125rem;
+  --size-300: 1.25rem;
+  --size-400: 1.5rem;
+  --size-500: 1.75rem;
+  --size-550: 1.85rem;
+  --size-600: 2rem;
+  --size-650: 2.25rem;
+  --size-700: 2.5rem;
+  --size-800: 3rem;
+  --size-850: 3.5rem;
+  --size-900: 5rem;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+*, *::before, *::after{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+img{
+  width: 100%;
+  display: block;
+}
+
+body{
+  font-family: 'Montserrat', sans-serif;
+  scroll-behavior: smooth;
+}
+
+ul{
+  list-style: none;
+}
+
+a{
+  text-decoration: none;
+}
+
+button{
+  cursor: pointer;
+}
+
+
+/* Font Sizes */
+.fs-100{
+  font-size: var(--size-100);
+}
+.fs-150{
+  font-size: var(--size-150);
+}
+.fs-200{
+  font-size: var(--size-200);
+}
+.fs-250{
+  font-size: var(--size-250);
+}
+.fs-300{
+  font-size: var(--size-300);
+}
+.fs-400{
+  font-size: var(--size-400);
+}
+.fs-500{
+  font-size: var(--size-500);
+}
+.fs-550{
+  font-size: var(--size-550);
+}
+.fs-600{
+  font-size: var(--size-600);
+}
+.fs-650{
+  font-size: var(--size-650);
+}
+.fs-700{
+  font-size: var(--size-700);
+}
+.fs-800{
+  font-size: var(--size-800);
+}
+.fs-850{
+  font-size: var(--size-850);
+}
+.fs-900{
+  font-size: var(--size-900);
+}
+
+
+
+/* Opacity */
+.op-0{
+  opacity: 0;
+}
+.op-100{
+  opacity: .8;
+}
+.op-200{
+  opacity: .7;
+}
+
+
+
+/* Font Weight */
+.fw-thin{
+  font-weight: var(--fw-thin);
+}
+.fw-regular{
+  font-weight: var(--fw-regular);
+}
+.fw-semi-bold{
+  font-weight: var(--fw-semi-bold);
+}
+.fw-bold{
+  font-weight: var(--fw-bold);
+}
+.fw-black{
+  font-weight: var(--fw-black);
+}
+
+
+
+/* Padding Block */
+.padding-block-10{
+  padding-block: var(--size-10);
+}
+.padding-block-50{
+  padding-block: var(--size-50);
+}
+.padding-block-100{
+  padding-block: var(--size-100);
+}
+.padding-block-200{
+  padding-block: var(--size-200);
+}
+.padding-block-300{
+  padding-block: var(--size-300);
+}
+.padding-block-400{
+  padding-block: var(--size-400);
+}
+.padding-block-500{
+  padding-block: var(--size-500);
+}
+.padding-block-600{
+  padding-block: var(--size-600);
+}
+
+
+
+
+
+/* Margin Block */
+.margin-block-10{
+  margin-block: var(--size-10);
+}
+.margin-block-50{
+  margin-block: var(--size-50);
+}
+.margin-block-100{
+  margin-block: var(--size-100);
+}
+.margin-block-200{
+  margin-block: var(--size-200);
+}
+.margin-block-300{
+  margin-block: var(--size-300);
+}
+.margin-block-400{
+  margin-block: var(--size-400);
+}
+.margin-block-500{
+  margin-block: var(--size-500);
+}
+.margin-block-600{
+  margin-block: var(--size-600);
+}
+
+/* Line Height */
+
+.line-ht-1{
+  line-height: 1;
+}
+.line-ht-1-1{
+  line-height: 1.1;
+}
+
+[data-type = "cl-blue"]{
+  color: var(--primary-blue);
+}
+
+button{
+  transition: all 300ms;
+}
+
+.button{
+  border: 1px solid var(--light-gray);
+  color: white;
+  font-size: var(--size-200);
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1;
+  transition: all 250ms;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+[data-type = "bg-blue"]{
+  background-color: var(--primary-blue);
+  color: white;
+}
+[data-type = "bg-blue"]:hover{
+  background-color: var(--deep-blue);
+}
+
+.button[data-type = "white"]{
+  background-color: white;
+  color: black;
+}
+
+.button[data-type = "white"]:hover{
+  background-color: var(--light-gray);
+}
+
+.section-title{
+  width: min(750px, 85%);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.section-margin{
+  margin: .5rem 10px;
+}
+
+@media screen and (min-width: 600px) {
+  .section-margin{
+    margin: 0 4rem;
+  }
+}
+
+.text-align{
+  text-align: center;
+}
+
+.featureback{
+  background-color: #090909;
+  opacity: 0.8;
+  background-image: radial-gradient(#f6f6f6 0.45px, #090909 0.45px);
+  background-size: 29px 29px;
+  color: white;
+  width: 80%;
+  border-radius: 10px;
+  padding: 10px;
+  margin-inline: auto;
+}
+
+
+
+
+/* @media screen and (min-width: 900px) {
+  .available-products{
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+} */
+
+.flex{
+  display: flex;
+  align-items: center;
+}
+.gap-100{
+  gap: .25rem;
 }

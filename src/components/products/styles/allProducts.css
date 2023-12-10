@@ -1,0 +1,16 @@
+@media screen and (min-width: 766px) {
+    .all-products{
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 1rem;
+        border-top: 1px solid var(--light-gray);
+}
+
+.filter-desktop{
+    position: sticky;
+    top: 70px;
+    height: 100vh;
+    border-right: 1px solid var(--light-gray);
+    border-top: 1px solid var(--light-gray);
+}
+}

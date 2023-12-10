@@ -1,0 +1,109 @@
+.product-card{
+    background-color: white;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--light-gray);
+    transition: all 300ms;
+    max-width: 400px;
+}
+
+.product-card:hover{
+    /* transform: translateY(-5px); */
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--primary-blue);
+}
+
+.product-card:hover img{
+    /* transform: scale(1.08); */
+}
+
+.product-image-wrapper{
+    position: relative;
+    border-radius: 10px;
+    width: 100%;
+    overflow: hidden;
+    padding: 5px;
+
+}
+
+.product-image-wrapper img{
+    background-color: var(--light-gray);
+    object-fit: contain;
+    height: 225px;
+    transition: all 300ms;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.product-image-wrapper:hover img{
+}
+.produc-card-details{
+    padding: 10px 5px;
+}
+.product-card-header, .product-card-footer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.product-card-footer p:nth-child(1){
+    display: flex;
+    align-items: center;
+    gap: .2rem;
+}
+
+.product-card-footer svg{
+    font-size: var(--size-250);
+    color: var(--star-rating);
+}
+
+.product-card-colors{
+}
+
+.product-card-color{
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-bottom: 2px;
+    border: 1px solid gray;
+}
+
+.product-favourite-button{
+    background-color: white;
+    padding: 5px;
+    border: 1px solid var(--light-gray);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    cursor: pointer;
+    transition: border 300ms;
+}
+.product-favourite-button.card{
+    position: absolute;
+    right: 3%;
+    top: 3%;
+    z-index: 3;
+}
+
+.product-favourite-button:hover{
+    background-color: rgb(241, 241, 241);
+    border: 1px solid silver;
+}
+
+.product-favourite-button svg{
+    font-size: 1.5rem;
+    color: red;
+}
+
+
+@media screen and (max-width: 480px) {
+    .product-card{
+        max-width: 500px;
+    }
+    .product-favourite-button svg{
+        font-size: 1.8rem;
+    }
+}

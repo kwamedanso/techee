@@ -1,0 +1,9 @@
+.star-rating{
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+}
+.star-rating svg{
+    color: var(--star-rating);
+    font-size: 1.2rem;
+}

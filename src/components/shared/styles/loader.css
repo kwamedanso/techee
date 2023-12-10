@@ -1,0 +1,43 @@
+.loader{
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader .dots{
+    display: flex;
+    gap: .5rem;
+}
+
+.loader .dots .dot{
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    animation: bounce 500ms linear infinite alternate;
+}
+
+.loader .dots .dot:nth-child(1){
+    background-color: var(--primary-blue);
+}
+.loader .dots .dot:nth-child(2){
+    background-color: var(--star-rating);
+    animation-delay: 150ms;
+
+}
+.loader .dots .dot:nth-child(3){
+    background-color: red;
+    animation-delay: 250ms;
+}
+
+@keyframes bounce {
+    0%{
+        transform: translateY(0px);
+    }
+    50%{
+        transform: translateY(5px);
+    }
+    100%{
+        transform: translateY(-5px);
+    }
+}

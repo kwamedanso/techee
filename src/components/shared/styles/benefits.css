@@ -1,0 +1,21 @@
+.benefits{
+    border-radius: 10px;
+    background-color: #090909;
+    /* opacity: .9; */
+    background-image: radial-gradient(#f6f6f6 0.45px, #090909 0.45px);
+    background-size: 35px 35px;
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    margin-inline: auto;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 3.5rem 0;
+    flex-wrap: wrap;
+
+}
+
+.benefit-item svg{
+    font-size: 3rem;
+}

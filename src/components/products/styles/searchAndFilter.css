@@ -1,0 +1,78 @@
+.search-and-filter{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .3rem;
+}
+
+.search-and-filter form{
+    border: 1px solid var(--light-gray);
+    padding: 4px;
+    border-radius: 15px;
+    display: flex;
+    gap: 1rem;
+}
+
+.search-and-filter .submit-btn{
+    font-size: 1rem;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 11px;
+}
+
+.search-and-filter form input{
+    border: none;
+    font-size: 1rem;
+    padding-left: 4px;
+    border-radius: 9px;
+
+}
+
+
+.search-and-filter input:focus{
+    outline: none;
+}
+
+.filter-button{
+}
+
+.filter-button button{
+    border: 1px solid var(--light-gray);
+    /* background-color: var(--primary-blue); */
+    border-radius: 15px;
+    padding: 3px 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.filter-button svg{
+    font-size: 1.8rem;
+    border-radius: 10px;
+    /* background-color: white; */
+    /* background-color: var(--primary-blue); */
+    color: white;
+}
+
+
+.filter-overlay{
+    /* display: none; */
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    pointer-events: all;
+}
+
+
+
+@media screen and (min-width: 768px) {
+    /* .search-and-filter{
+        width: 100%;
+    } */
+    .filter-button {
+        display: none;
+    }
+    .search-and-filter form input{
+        width: 400px;
+    }
+}

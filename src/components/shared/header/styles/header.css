@@ -1,0 +1,150 @@
+header{
+    backdrop-filter: blur(5px);
+    background: hsla(0, 0%, 100%, .5);
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+header a{
+    color: var(--deep-blue);
+}
+
+
+header .header-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    
+}
+
+
+/* LOGO */
+.header-wrapper .logo a{
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+
+
+/* NAVLINKS */
+nav{
+    
+}
+
+
+.nav-links-wrapper .nav-links{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1rem;
+}
+
+.nav-link{
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.nav-link:hover, .nav-link.active{
+    background-color: var(--primary-blue);
+    color: white;
+}
+
+
+
+
+/* FAVORITE & CART */
+.favs-cart-ham{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .8rem;
+}
+
+.favs-cart-ham sv{
+    font-size: 1.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.favs-cart-ham .header-icons{
+    font-size: 1.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* HAMBURGER */
+.hamburger{
+    display: none;
+    cursor: pointer;
+
+}
+
+.hamburger .bar{
+    width: 30px;
+    height: 4px;
+    background-color: black;
+    margin: 5px 0;
+    transition: all 300ms;
+}
+
+.hamburger.active .bar:nth-child(1){
+    transform: rotate(45deg) translateX(6px);
+}
+.hamburger.active .bar:nth-child(2){
+    display: none;
+}
+.hamburger.active .bar:nth-child(3){
+    transform: rotate(-45deg) translateX(6px);
+}
+
+
+
+@media screen and (max-width: 650px) {
+    header{
+        background-color: white;
+    }
+    .hamburger{
+        display: block;
+    }
+
+    nav{
+        display: none;
+        animation: slide 400ms linear  1 alternate;  
+    }
+
+    nav.active{
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 60px;
+        background-color: white;
+        height: 100vh;
+        height: 100dvh;
+        backdrop-filter: blur(5px);
+    }
+
+    .nav-links-wrapper .nav-links{
+        padding: 30px 0;
+        flex-direction: column;
+        gap: 2rem;
+    }
+}
+
+
+@keyframes slide {
+    0%{
+        transform: translateX(100vw);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}

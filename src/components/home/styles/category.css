@@ -1,0 +1,50 @@
+.category-buttons{
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    scroll-snap-type: x mandatory;
+    overflow: auto;
+    padding: 1rem;
+
+}
+
+.category-buttons::-webkit-scrollbar{
+    display: none;
+}
+
+.category-buttons button{
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--light-gray);
+    scroll-snap-align: start;
+    transition: all 300ms;
+    scroll-padding: 10px;
+}
+
+
+.category-buttons button.active-tab{
+    background-color: var(--primary-blue);
+    color: white;
+    outline: 1px solid var(--deep-blue);
+}
+
+.category-buttons button.active-tab:hover{
+    background-color: var(--deep-blue);
+}
+
+.category-buttons button:hover{
+    background-color: var(--light-gray-hover);
+}
+
+
+@media screen and (max-width: 600px) {
+    .category-buttons{
+        justify-content:flex-start;
+
+    }
+    .category-buttons button{
+        flex: 0 0 25%;
+        
+    }
+}
