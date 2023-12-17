@@ -8,7 +8,7 @@ export default function AvailableProducts({ availableProducts, category }) {
         <>
             <div className={` ${category ? "similar-products" : "available-products"}`}>
                 {availableProducts?.map(product => (
-                    <ProductCard key={product.id} {...product} />
+                    <ProductCard key={product?.id} {...product} />
                 ))}
             </div>
         </>

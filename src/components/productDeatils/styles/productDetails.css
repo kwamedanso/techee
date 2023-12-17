@@ -38,10 +38,12 @@
 }
 
 .details-content-image-section{
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: .5rem;
 }
+
 
 .details-content{
     display: grid;

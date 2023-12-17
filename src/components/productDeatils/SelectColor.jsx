@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 
-export default function SelectColor({ colors, handleImageSetting }) {
-    const [currentColor, setCurrentColor] = useState(Object.keys(colors.at(0))[0])
+export default function SelectColor({ colors, handleImageSetting, images }) {
+    const [currentColor, setCurrentColor] = useState(colors?.[0])
 
 
 
-    function handleColorSetting(color) {
-        handleImageSetting(Object.values(color)[0])
+    function handleColorSetting(color, index) {
+        handleImageSetting(images?.at(index))
 
         // Add current color to selected color in cart details
-        setCurrentColor(Object.keys(color)[0])
+        setCurrentColor(color)
 
     }
 
@@ -19,17 +19,17 @@ export default function SelectColor({ colors, handleImageSetting }) {
                 <p className='fw-semi-bold fs-300'>Choose a color</p>
                 <div className="colors-grid padding-block-50">
 
-                    {colors.map(color => (
-                        <button key={Object.keys(color)}
-                            className={`color ${currentColor === Object.keys(color)[0] ? "active" : null}`}
-                            style={{ backgroundColor: `${Object.keys(color)}` }}
-                            onClick={() => handleColorSetting(color)}
-                            title={Object.keys(color)}
+                    {colors?.map((color, index) => (
+                        <button key={color}
+                            className={`color ${currentColor === color ? "active" : null}`}
+                            style={{ backgroundColor: `${color}` }}
+                            onClick={() => handleColorSetting(color, index)}
+                            title={color}
                         ></button>
                     ))}
 
                 </div>
-            </div><hr />
+            </div > <hr />
         </>
     )
 }

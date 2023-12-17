@@ -3,7 +3,7 @@ import "components/products/styles/pagination.css"
 import { FaLessThan, FaGreaterThan } from "react-icons/fa6"
 import scrollToTop from 'utils/SCROLLT0TOP';
 
-export default function Pagination({ totalPost, postsPerPage, currentPage, setCurrentPage }) {
+export default function Pagination({ totalPost, postsPerPage, currentPage, setSearchParams }) {
     const pages = [];
 
     for (let i = 1; i <= Math.ceil(totalPost / postsPerPage); i++) {
@@ -12,20 +12,20 @@ export default function Pagination({ totalPost, postsPerPage, currentPage, setCu
 
     function handleCurrentPage(page) {
         if (typeof page === 'number') {
-            setCurrentPage(prev => {
+            setSearchParams(prev => {
                 prev.set("page", page)
                 return prev;
             }, { replace: true })
         } else {
             if (page === "increase") {
-                if (currentPage < pages.length) setCurrentPage(prev => {
+                if (currentPage < pages.length) setSearchParams(prev => {
                     prev.set("page", currentPage + 1)
                     return prev
                 }, { replace: true })
 
 
             } else {
-                if (currentPage > 1) setCurrentPage(prev => {
+                if (currentPage > 1) setSearchParams(prev => {
                     prev.set("page", currentPage - 1)
                     return prev
                 }, { replace: true })

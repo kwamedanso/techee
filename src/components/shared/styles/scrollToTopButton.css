@@ -16,7 +16,7 @@
 }
 
 .scroll-to-top-button:hover{
-    
+    border-color: var(--primary-blue);
 }
 
 .scroll-to-top-button svg{

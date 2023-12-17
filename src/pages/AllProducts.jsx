@@ -3,27 +3,24 @@ import { useSearchParams } from 'react-router-dom'
 import AvailableProducts from 'components/shared/AvailableProducts'
 import Pagination from 'components/products/Pagination'
 import ScrollToTop from 'components/shared/ScrollToTop'
-import useFetch from 'hooks/useFetch'
 import SearchAndFilter from 'components/products/SearchAndFilter'
 import "components/products/styles/allProducts.css"
 import AllFilters from 'components/products/AllFilters'
+import supabase from 'config/supabaseClient'
+import Loader from 'components/shared/Loader'
 
 export default function AllProducts() {
-    // let initialFilters = { brand: [], category: [], price: "", storage: [] }
-    const [searchBox, setSearchBox] = useSearchParams({ search: "" });
-    const [currentPage, setCurrentPage] = useSearchParams({ page: 1 })
-    const [filteredProducts, setFilteredProducts] = useState([])
-    const [selectedBrand, setSelectedBrand] = useSearchParams({ brand: "" })
-    const [selectedCategory, setSelectedCategory] = useSearchParams({ category: "" })
+    const [allProducts, setAllProducts] = useState(null)
+    // const [fetchError, setFetchError] = useState(null)
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [filteredProducts, setFilteredProducts] = useState(null);
 
 
-    const url = "https://kwamedanso.github.io/productsDataAPI/techee.json"
-    const { loading, data } = useFetch(url)
 
-    const search = searchBox.get("search");
-    const page = Number(currentPage.get("page"))
-    const brand = selectedBrand.get("brand")
-    const category = selectedCategory.get("category")
+    const search = searchParams.get("search")
+    const page = Number(searchParams.get("page")) || 1
+    const brand = searchParams.get("brand")
+    const category = searchParams.get("category")
 
 
     const postsPerPage = 15;
@@ -32,121 +29,171 @@ export default function AllProducts() {
     const lastPost = postsPerPage * Number(page);
     const firstPost = lastPost - postsPerPage;
 
-
-    // Setting the json data
+    // Fetch products from supabase
     useEffect(() => {
-        if (!loading) {
-            setFilteredProducts(data)
-        } else {
-            setFilteredProducts([])
+        const fetchData = async () => {
+            const { data, error } = await supabase
+                .from("products")
+                .select()
+
+            if (error) {
+                console.log(error)
+                // setFetchError("Sorry an error occurred white fetching data")
+                setAllProducts(null)
+            } else {
+                setAllProducts(data)
+                // setFetchError(null)
+            }
         }
-    }, [data, loading])
+
+        fetchData()
+    }, [])
+
+    useEffect(() => {
+        if (search) {
+            // searchFilter(allProducts)
+            let products = allProducts?.filter(product => product?.brand.toLowerCase().includes(search.toLowerCase()) || product?.category.toLowerCase().includes(search.toLowerCase()) || product?.model.toLowerCase().includes(search.toLowerCase()));
+            setFilteredProducts(products);
+
+        } else if (brand && !category) {
+            // brandFilter(allProducts)
+            let products = allProducts?.filter(product => product?.brand.toLowerCase() === brand.toLowerCase())
+            setFilteredProducts(products)
+
+        } else if (category && !brand) {
+            // categoryFilter(allProducts)
+            let products = allProducts?.filter(product => product?.category.toLowerCase() === category.toLowerCase())
+            setFilteredProducts(products)
+
+        } else if (category && brand) {
+            // bothFilter(allProducts)
+            let products = allProducts?.filter(product => product?.brand.toLowerCase() === brand.toLowerCase() && product?.category.toLowerCase() === category.toLowerCase());
+            setFilteredProducts(products)
+
+        } else {
+            setFilteredProducts(allProducts)
+        }
+    }, [search, brand, category, allProducts])
 
 
-    // Filter user selection from the radio buttons
-    function userselectionFilter(selection, filterBy) {
-        let products = data?.filter(product => product[filterBy].toLowerCase() === selection.toLowerCase())
-        setFilteredProducts(products)
-        resetPage()
+
+
+    function searchFilter(data) {
+        let products = data?.filter(product => product?.brand.toLowerCase().includes(search.toLowerCase()) || product?.category.toLowerCase().includes(search.toLowerCase()) || product?.model.toLowerCase().includes(search.toLowerCase()));
+        setFilteredProducts(products);
     }
 
+    // function brandFilter(data) {
+    //     let products = data?.filter(product => product?.brand.toLowerCase() === brand.toLowerCase())
+    //     setFilteredProducts(products)
+    // }
 
-    useEffect(() => {
-        if (brand.length === 0 && category.length !== 0) {
-            let products = data?.filter(product => product.category.toLowerCase() === category.toLowerCase());
-            //filter prices
-            setFilteredProducts(products)
-            // console.log("only category:", products)
-        } else if (brand.length !== 0 && category.length === 0) {
-            let products = data?.filter(product => product.brand.toLowerCase() === brand.toLowerCase());
-            // filter prices
-            setFilteredProducts(products)
-            // console.log("only brand:", products)
-        } else if (brand.length === 0 && category.length === 0) {
-            let products = data?.filter(product => product.price > 0);
-            //filter prices
-            setFilteredProducts(products)
-            // console.log("nothing:", products)
-        } else {
-            let products = data?.filter(product => product.category.toLowerCase() === category.toLowerCase() && product.brand.toLowerCase() === brand.toLowerCase());
-            //filter prices
-            setFilteredProducts(products)
-            // console.log("both:", products)
-        }
-    }, [data, category, brand])
+    // function categoryFilter(data) {
+    //     let products = data?.filter(product => product?.category.toLowerCase() === category.toLowerCase())
+    //     setFilteredProducts(products)
+    // }
+
+    // function bothFilter(data) {
+    //     let products = data?.filter(product => product?.brand.toLowerCase() === brand.toLowerCase() && product?.category.toLowerCase() === category.toLowerCase());
+    //     setFilteredProducts(products)
+    // }
+
+
+
+
+
+
+
+
+
 
 
 
     // Function to reset currentPage to 1
     const resetPage = () => {
-        setCurrentPage(prev => {
+        setSearchParams(prev => {
             prev.set("page", 1)
             return prev;
         }, { replace: true })
     }
 
-
-    // SEARCH BOX FILTER
-    function searchFilter() {
-        let products = data?.filter(product => product.brand.toLowerCase().includes(search.toLowerCase()) || product.category.toLowerCase().includes(search.toLowerCase()) || product.model.toLowerCase().includes(search.toLowerCase()));
-
-        setFilteredProducts(products);
+    // Function to delete the search from the url
+    function resetSearch() {
+        setSearchParams(prev => {
+            prev.delete("search")
+            return prev;
+        }, { replace: true })
     }
-    // useEffect(() => {
-    //     let products = data?.filter(product => product.brand.toLowerCase().includes(search.toLowerCase()) || product.category.toLowerCase().includes(search.toLowerCase()) || product.model.toLowerCase().includes(search.toLowerCase()));
 
-    //     setFilteredProducts(products);
-    //     // resetPage()
-    // }, [search, data])
+    //Function to delete brand and category from the url
+    function resetBrandandCategory() {
+        setSearchParams(prev => {
+            prev.delete("brand")
+            prev.delete("category")
+            return prev;
+        }, { replace: true })
+    }
+
 
 
 
     // GET THE USERS INPUT FROM THE SEARCHANDFILTER COMPONENT
     function getUserSearch(userSearch) {
-        setSearchBox(prev => {
+        resetBrandandCategory()
+        resetPage()
+        setSearchParams(prev => {
             prev.set("search", userSearch)
             return prev
         }, { replace: true })
+        // searchFilter(allProducts)
     }
 
 
     // GET BRAND SELECTION FROM THE INPUT
     function getBrandSelection(userSelection) {
-        setSelectedBrand(prev => {
+        resetSearch();
+        resetPage()
+        setSearchParams(prev => {
             prev.set("brand", userSelection);
             return prev;
         }, { replace: true })
     }
 
+
     // GET CATEGORY SELECTION FROM THE INPUT
     function getCategorySelection(userSelection) {
-        setSelectedCategory(prev => {
+        resetSearch()
+        resetPage()
+        setSearchParams(prev => {
             prev.set("category", userSelection);
             return prev;
         }, { replace: true })
     }
 
 
-
     return (
         <>
             <ScrollToTop />
             <div className='all-products-wrapper section-margin'>
-                <SearchAndFilter getUserSearch={getUserSearch} userselectionFilter={userselectionFilter} resetPage={resetPage} getBrandSelection={getBrandSelection} getCategorySelection={getCategorySelection} setFilteredProducts={setFilteredProducts} searchFilter={searchFilter} />
-
+                <SearchAndFilter getUserSearch={getUserSearch} searchFilter={searchFilter} getBrandSelection={getBrandSelection} getCategorySelection={getCategorySelection} setFilteredProducts={setFilteredProducts} />
 
 
                 <div className="all-products margin-block-100">
                     <div className="filter-desktop">
-                        <AllFilters userselectionFilter={userselectionFilter} getBrandSelection={getBrandSelection} getCategorySelection={getCategorySelection} />
+                        <AllFilters getBrandSelection={getBrandSelection} getCategorySelection={getCategorySelection} />
                     </div>
 
                     <div className='padding-block-100'>
-                        <AvailableProducts availableProducts={filteredProducts?.slice(firstPost, lastPost)} />
+                        {!filteredProducts && <Loader />}
+                        {filteredProducts?.length === 0 && <div><h1>No products meet the current filter</h1></div>}
+
+                        {filteredProducts?.length > 0 && <AvailableProducts
+                            availableProducts={filteredProducts?.slice(firstPost, lastPost)}
+                        />}
                     </div>
                 </div>
 
-                {filteredProducts?.length > postsPerPage && <Pagination totalPost={totalPost} postsPerPage={postsPerPage} currentPage={page} setCurrentPage={setCurrentPage} />}
+                {filteredProducts?.length > postsPerPage && <Pagination totalPost={totalPost} postsPerPage={postsPerPage} currentPage={page} setSearchParams={setSearchParams} />}
             </div>
         </>
     )

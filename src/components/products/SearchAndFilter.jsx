@@ -16,15 +16,17 @@ export default function SearchAndFilter({ getUserSearch, userselectionFilter, re
 
     function handleSearchBox(e) {
         e.preventDefault()
-        searchFilter();
+        // searchFilter();
+        // console.log(search)
+        getUserSearch(search)
     }
 
 
     function handleKeydown(e) {
         if (e.keyCode === 13 || e.key === "Enter") {
             e.preventDefault();
-            // getUserSearch(search)
-            searchFilter()
+            getUserSearch(search)
+            // searchFilter()
             // resetPage()
         }
     }

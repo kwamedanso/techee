@@ -1,52 +1,68 @@
-import React, { useEffect, useState, Suspense, lazy } from 'react'
+import React, { useEffect, useState } from 'react'
 import "components/home/styles/category.css"
-// import "components/shared/styles/productCard.css"
-import useFetch from 'hooks/useFetch'
 import Loader from 'components/shared/Loader'
-const AvailableProducts = lazy(() => import("components/shared/AvailableProducts"))
+import supabase from 'config/supabaseClient'
+import AvailableProducts from 'components/shared/AvailableProducts'
 
 
 const categoryButtons = ["All", "Laptops", "Phones", "Headsets", "Others"]
 export default function Category() {
-    const url = "https://kwamedanso.github.io/productsDataAPI/techee.json";
-    const { data } = useFetch(url);
-
+    const [allProducts, setAllProducts] = useState(null)
     const [activeTab, setActiveTab] = useState("All");
-    const [filteredProducts, setfilteredProducts] = useState([])
+    const [filteredProducts, setfilteredProducts] = useState(null)
+    const [fetchError, setFetchError] = useState(null)
 
 
     useEffect(() => {
-        if (activeTab === 'All') {
-            setfilteredProducts(data)
-        } else if (activeTab === "Others") {
-            let products = data?.filter((product) => product.category !== "Headsets" && product.category !== "Phones" && product.category !== "Laptops");
-            setfilteredProducts([...products])
+        const fetchData = async () => {
+            const { data, error } = await supabase
+                .from("products")
+                .select()
+
+            if (error) {
+                setFetchError("Could not get the products")
+                setAllProducts(null)
+                console.log(error)
+            } else {
+                setAllProducts(data)
+                setfilteredProducts(data)
+                setFetchError(null)
+            }
         }
-        else {
-            let products = data?.filter((product) => product.category === activeTab);
-            setfilteredProducts([...products])
-        }
-    }, [activeTab, data])
+
+        fetchData()
+    }, [])
+
 
     function handleActiveTab(btn) {
         setActiveTab(btn)
+        if (btn === 'All') {
+            setfilteredProducts(allProducts)
+        } else if (btn === "Others") {
+            let products = allProducts?.filter((product) => product.category !== "Headsets" && product.category !== "Phones" && product.category !== "Laptops");
+            setfilteredProducts([...products])
+        }
+        else {
+            let products = allProducts?.filter((product) => product.category === btn);
+            setfilteredProducts([...products])
+        }
     }
 
     return (
         <>
             <div className="category-wrapper padding-block-600 section-margin">
-                <div className="category-buttons">
+                {allProducts !== null && <div className="category-buttons">
                     {categoryButtons.map(btn => <button
+                        data-type='bg-white'
                         key={btn}
                         className={`fs-200 ${activeTab === btn ? "active-tab" : ""}`}
                         onClick={() => handleActiveTab(btn)}
                     >{btn}</button>)}
-                </div>
+                </div>}
 
+                {allProducts && <AvailableProducts availableProducts={filteredProducts?.slice(0, 10)} />}
+                {allProducts === null && <Loader />}
 
-                <Suspense fallback={<Loader />}>
-                    <AvailableProducts availableProducts={filteredProducts?.slice(0, 10)} />
-                </Suspense>
             </div>
         </>
     )
