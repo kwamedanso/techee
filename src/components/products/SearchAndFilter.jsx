@@ -1,23 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { LuSettings2 } from "react-icons/lu"
 import "components/products/styles/searchAndFilter.css"
 import AllFilters from './AllFilters';
 
 
-export default function SearchAndFilter({ getUserSearch, userselectionFilter, resetPage, getBrandSelection, getCategorySelection, searchFilter }) {
+export default function SearchAndFilter({ getUserSearch, userselectionFilter, getBrandSelection, getCategorySelection }) {
     const [search, setSearch] = useState("");
     const [filterEnabled, setFilterEnabled] = useState(false);
 
 
-    // useEffect(() => {
-    //     getUserSearch(search)
-    // }, [search])
-
-
     function handleSearchBox(e) {
         e.preventDefault()
-        // searchFilter();
-        // console.log(search)
         getUserSearch(search)
     }
 
@@ -26,16 +19,13 @@ export default function SearchAndFilter({ getUserSearch, userselectionFilter, re
         if (e.keyCode === 13 || e.key === "Enter") {
             e.preventDefault();
             getUserSearch(search)
-            // searchFilter()
-            // resetPage()
         }
     }
+
 
     function handleFilterButton() {
         setFilterEnabled(!filterEnabled)
     }
-
-
 
 
     return (
@@ -55,8 +45,6 @@ export default function SearchAndFilter({ getUserSearch, userselectionFilter, re
             {filterEnabled && <div className='filter-mobile'>
                 <AllFilters active={filterEnabled} setFilterEnabled={setFilterEnabled} handleFilterButton={handleFilterButton} userselectionFilter={userselectionFilter} getBrandSelection={getBrandSelection} getCategorySelection={getCategorySelection} />
             </div>}
-
-
         </>
     )
 }

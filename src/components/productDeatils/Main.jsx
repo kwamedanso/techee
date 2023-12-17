@@ -9,7 +9,6 @@ import CartCheckout from 'components/productDeatils/CartCheckout';
 import ShowImage from 'components/productDeatils/ShowImage';
 import { LiaShippingFastSolid } from "react-icons/lia"
 import AvailableProducts from 'components/shared/AvailableProducts';
-import { useLocation } from 'react-router-dom';
 import ScrollToTop from 'components/shared/ScrollToTop';
 import supabase from 'config/supabaseClient';
 
@@ -20,7 +19,6 @@ export default function Main({ productId }) {
     const [currentImage, setCurrentImage] = useState(null)
     const [currentPrice, setCurrentPrice] = useState(null)
 
-    const { pathname } = useLocation();
 
     const fetchSameCategory = async (category) => {
         const { data, error } = await supabase
@@ -62,7 +60,7 @@ export default function Main({ productId }) {
         }
 
         fetchProduct();
-    }, [pathname])
+    }, [productId])
 
 
 
