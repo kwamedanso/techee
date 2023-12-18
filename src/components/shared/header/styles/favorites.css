@@ -10,7 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
+    position: relative;
 }
 
 .favorite-button:hover{
@@ -23,6 +23,23 @@
     color: red;
 }
 
+
+.notification-badge{
+    width: 15px;
+    height: 15px;
+    padding: 3px;
+    border-radius: 10px;
+    background-color: red;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    font-size: .9rem;
+    font-weight: 500;
+}
 
 .favorites{
     width: 450px;
