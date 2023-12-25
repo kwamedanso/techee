@@ -9,9 +9,13 @@ import ScrollToTopButton from "components/shared/ScrollToTopButton";
 
 function App() {
   const [favorites, setFavorites] = useState([]);
+  const [cart, setCart] = useState([])
+  const [cartVariants, setCartVariants] = useState([])
   const [toastNotification, setToastNotification] = useState(false)
 
-  const value = { state: { favorites: favorites, toastNotification: toastNotification }, actions: { setFavorites: setFavorites, setToastNotification: setToastNotification } }
+  const value = { state: { favorites: favorites, toastNotification: toastNotification, cart: cart, cartVariants: cartVariants }, actions: { setFavorites: setFavorites, setToastNotification: setToastNotification, setCart: setCart, setCartVariants: setCartVariants } }
+  // console.log(cartVariants)
+
   return (
     <>
       <Context.Provider value={value}>

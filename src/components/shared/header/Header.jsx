@@ -4,6 +4,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai"
 import navlinks from 'const/navlinks'
 import FavoriteButton from './FavoriteButton'
 import "components/shared/header/styles/header.css"
+import CartButton from './CartButton'
 
 export default function Header() {
     const [hamburger, setHamburger] = useState(false)
@@ -27,7 +28,13 @@ export default function Header() {
 
                 <div className="favs-cart-ham">
                     <FavoriteButton />
-                    <NavLink to={"/cart"}><AiOutlineShoppingCart className='header-icons' /></NavLink>
+                    {/* <NavLink to={"/cart"} className="cart-button">
+                        <AiOutlineShoppingCart className='header-icons' />
+                        <div className='notification-badge'>
+                            <span>{7}</span>
+                        </div>
+                    </NavLink> */}
+                    <CartButton />
                     <div className={`hamburger ${hamburger ? "active" : null}`} onClick={() => setHamburger(!hamburger)}>
                         <div className="bar"></div>
                         <div className="bar"></div>

@@ -25,7 +25,7 @@ export default function ProductCard({ id, brand, price, model, starRating, color
                                 ${price}
                                 <span style={{ textDecoration: "line-through" }} className='fs-150 op-200 fw-semi-bold'>${prevPrice}</span>
                             </p>
-                            <p className='fs-200 fw-semi-bol margin-block-50'>{brand} {model}</p>
+                            <p className='fs-200 fw-semi-bol margin-block-100'>{brand} {model}</p>
                         </div>
                         <div className="product-card-colors">
                             {colors.map(color => <div key={color} className='product-card-color' style={{ backgroundColor: color }}></div>)}

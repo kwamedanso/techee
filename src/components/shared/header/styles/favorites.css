@@ -29,7 +29,7 @@
     height: 15px;
     padding: 3px;
     border-radius: 10px;
-    background-color: red;
+    background-color: var(--primary-blue);
     color: white;
     display: flex;
     justify-content: center;

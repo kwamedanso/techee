@@ -5,12 +5,12 @@ import Description from 'components/productDeatils/Description'
 import Price from 'components/productDeatils/Price'
 import SelectColor from 'components/productDeatils/SelectColor'
 import SelectStorage from 'components/productDeatils/SelectStorage';
-import CartCheckout from 'components/productDeatils/CartCheckout';
 import ShowImage from 'components/productDeatils/ShowImage';
 import { LiaShippingFastSolid } from "react-icons/lia"
 import AvailableProducts from 'components/shared/AvailableProducts';
 import ScrollToTop from 'components/shared/ScrollToTop';
 import supabase from 'config/supabaseClient';
+import AddToCart from 'components/productDeatils/AddToCart';
 
 export default function Main({ productId }) {
     const [currentProduct, setCurrentProduct] = useState(null);
@@ -18,6 +18,7 @@ export default function Main({ productId }) {
     const [fetchError, setFetchError] = useState(null)
     const [currentImage, setCurrentImage] = useState(null)
     const [currentPrice, setCurrentPrice] = useState(null)
+    const [variantInfo, setVariantInfo] = useState({ color: "", storage: "" })
 
 
     const fetchSameCategory = async (category) => {
@@ -25,18 +26,21 @@ export default function Main({ productId }) {
             .from("products")
             .select()
             .eq("category", `${category}`)
-            .range(1, 5)
+            .neq("id", productId)
+            .range(0, 4)
+
 
         if (error) {
-            // setFetchError("Could not fetch the products")
+            setFetchError("Could not fetch the products")
             setSameCategory(null)
             console.log(error)
         } else {
             setSameCategory(data)
-            // setFetchError(null)
+            setFetchError(null)
         }
 
     }
+
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -49,6 +53,7 @@ export default function Main({ productId }) {
                 setFetchError("Could not fetch the products")
                 setCurrentProduct(null)
                 console.log(error)
+
             } else {
                 setCurrentProduct(data[0])
                 setCurrentImage(data[0].images[0])
@@ -60,8 +65,8 @@ export default function Main({ productId }) {
         }
 
         fetchProduct();
+        setVariantInfo({ color: "", storage: "" })
     }, [productId])
-
 
 
     function handleImageSetting(img) {
@@ -94,11 +99,20 @@ export default function Main({ productId }) {
                             colors={currentProduct?.colors}
                             handleImageSetting={handleImageSetting}
                             images={currentProduct?.images}
+                            variantInfo={variantInfo}
+                            setVariantInfo={setVariantInfo}
                         />
 
-                        <SelectStorage storage={currentProduct?.storage} currentPrice={currentPrice} setcurrentPrice={setCurrentPrice} price={currentProduct?.price} />
+                        <SelectStorage
+                            storage={currentProduct?.storage}
+                            currentPrice={currentPrice}
+                            setcurrentPrice={setCurrentPrice}
+                            price={currentProduct?.price}
+                            variantInfo={variantInfo}
+                            setVariantInfo={setVariantInfo}
+                        />
 
-                        <CartCheckout id={currentProduct?.id} />
+                        <AddToCart id={currentProduct?.id} varianInfo={variantInfo} setVariantInfo={setVariantInfo} />
 
                         <div className='padding-block-100'>
                             <p className='free-delivery fs-200'><LiaShippingFastSolid /> Free delievery on orders over $300</p>

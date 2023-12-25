@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export default function SelectStorage({ storage, currentPrice, setcurrentPrice, price }) {
+export default function SelectStorage({ storage, setcurrentPrice, price, variantInfo, setVariantInfo }) {
     const [currentStorage, setcurrentStorage] = useState(storage && Object.keys(storage.at(0))[0]);
 
 
@@ -8,6 +8,7 @@ export default function SelectStorage({ storage, currentPrice, setcurrentPrice, 
         setcurrentStorage(Object.keys(size)[0])
         let addtion = Object.values(size)[0]
         setcurrentPrice(price + addtion)
+        setVariantInfo({ ...variantInfo, storage: Object.keys(size)[0] })
     }
 
 
@@ -19,7 +20,7 @@ export default function SelectStorage({ storage, currentPrice, setcurrentPrice, 
                     {storage?.map(size => (
                         <button key={Object.keys(size)}
                             className='storage-button'
-                            data-type={`${currentStorage === Object.keys(size)[0] ? "bg-blue" : "white"}`}
+                            data-type={`${variantInfo.storage == Object.keys(size) ? "bg-blue" : "white"}`}
                             onClick={() => handleStorageSetting(size)}
                         >
                             <span>{Object.keys(size)} GB</span>

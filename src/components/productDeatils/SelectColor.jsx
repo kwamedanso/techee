@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export default function SelectColor({ colors, handleImageSetting, images }) {
+export default function SelectColor({ colors, handleImageSetting, images, variantInfo, setVariantInfo }) {
     const [currentColor, setCurrentColor] = useState(colors?.[0])
 
 
@@ -10,8 +10,9 @@ export default function SelectColor({ colors, handleImageSetting, images }) {
 
         // Add current color to selected color in cart details
         setCurrentColor(color)
-
+        setVariantInfo({ ...variantInfo, color: color })
     }
+
 
     return (
         <>
