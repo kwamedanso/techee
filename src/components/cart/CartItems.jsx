@@ -3,18 +3,37 @@ import { RxCrossCircled } from "react-icons/rx"
 import { Link } from 'react-router-dom';
 
 
-export default function CartItems({ allProducts, cartVariants, removeFromCart }) {
+export default function CartItems({ allProducts, cartVariants, setCartVariants, removeFromCart }) {
 
 
+    function quantityIncrement(id) {
+        setCartVariants(cartVariants.map(item => {
+            if (item.id === id) {
+                return { ...item, quantity: item.quantity + 1 }
+            } else {
+                return item
+            }
+        }))
+    }
+
+    function quantityDecrease(id) {
+        if (cartVariants.find(item => item.id === id).quantity === 0) return
+
+        setCartVariants(cartVariants.map(item => {
+            if (item.id === id) {
+                return { ...item, quantity: item.quantity - 1 }
+            } else {
+                return item
+            }
+        }))
+    }
     return (
         <div className="cart-items">
-            {allProducts.length === 0 ? <>
-                <h2>No products added to cart</h2>
-                <Link to={"/products"}>View all products</Link>
-            </> : <> {allProducts?.map((product) => <div key={product?.id} className="cart-item">
+            {allProducts?.map((product) => <div key={product?.id} className="cart-item">
                 <div className="cart-item__image">
                     <Link to={`/productdetails/${product.id}`}>
-                        <img src={product?.images[0]} alt={product?.model} />
+                        {/* find the index of the cart item color in the allProducts current item colors array */}
+                        <img src={product?.images[product.colors.findIndex(color => color === cartVariants.find(item => item.id === product.id).color)]} alt={product?.model} />
                     </Link>
                 </div>
                 <div className="cart-item__desc">
@@ -39,13 +58,17 @@ export default function CartItems({ allProducts, cartVariants, removeFromCart })
                         </p>}
                     </div>
 
-                    <div>
+                    <div className='cart-item_flex'>
                         <p className='fw-semi-bold fs-300'>${product?.price}</p>
-                        <div className="quantity-buttons"></div>
+                        <div className="quantity-buttons">
+                            <button onClick={() => quantityDecrease(product?.id)}>-</button>
+                            <span>{cartVariants.find(item => item.id === product?.id)?.quantity}</span>
+                            <button onClick={() => quantityIncrement(product?.id)}>+</button>
+                        </div>
                     </div>
                 </div>
             </div>)}
-            </>}
+
         </div>
     )
 }

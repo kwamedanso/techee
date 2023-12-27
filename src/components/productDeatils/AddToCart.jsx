@@ -22,7 +22,7 @@ export default function AddToCart({ id, varianInfo, setVariantInfo }) {
 
         if (!cartVariants.some(itemExist)) {
             if (varianInfo.storage || varianInfo.color) {
-                setCartVariants(prev => [...prev, { id: productId, color: varianInfo.color, storage: varianInfo.storage }])
+                setCartVariants(prev => [...prev, { id: productId, color: varianInfo.color, storage: varianInfo.storage, quantity: 1 }])
                 setIsActive(false)
             } else {
                 setIsActive(true)
