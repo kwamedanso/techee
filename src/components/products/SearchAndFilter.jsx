@@ -11,7 +11,7 @@ export default function SearchAndFilter({ getUserSearch, userselectionFilter, ge
 
     function handleSearchBox(e) {
         e.preventDefault()
-        getUserSearch(search)
+        getUserSearch(search.trim())
     }
 
 
