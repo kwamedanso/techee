@@ -20,7 +20,7 @@ export default function SelectStorage({ storage, setcurrentPrice, price, variant
                     {storage?.map(size => (
                         <button key={Object.keys(size)}
                             className='storage-button'
-                            data-type={`${variantInfo.storage == Object.keys(size) ? "bg-blue" : "white"}`}
+                            data-type={`${variantInfo.storage === Object.keys(size)[0] ? "bg-blue" : "bg-white"}`}
                             onClick={() => handleStorageSetting(size)}
                         >
                             <span>{Object.keys(size)} GB</span>

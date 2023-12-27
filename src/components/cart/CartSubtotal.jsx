@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 export default function CartSubtotal({ cartVariants, allProducts }) {
 
@@ -63,6 +64,17 @@ export default function CartSubtotal({ cartVariants, allProducts }) {
                                 <span>Order Total</span>
                                 {allProducts.length === 0 ? <span>$0</span> : <span className='fs-250 fw-semi-bold'>${totalSum}</span>}
                             </p>
+                        </div>
+                    </div>
+
+                    <div className="subtotal-buttons">
+                        <div>
+                            <Link to={"/checkout"} className='cart-checkout-btn margin-block-50' data-type='bg-blue'>
+                                Go to Checkout
+                            </Link>
+                            <Link to={"/products"} className='cart-checkout-btn margin-block-50' data-type='bg-white'>
+                                Continue Shopping
+                            </Link>
                         </div>
                     </div>
                 </div>

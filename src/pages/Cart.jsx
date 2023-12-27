@@ -18,9 +18,9 @@ export default function Cart() {
     let value = useContext(Context)
     let { state: { cartVariants }, actions: { setCartVariants } } = value;
 
-    let cartProductIds = []
 
     useEffect(() => {
+        let cartProductIds = []
         for (let i = 0; i < cartVariants.length; i++) {
             cartProductIds.push(cartVariants[i].id)
         }
@@ -52,32 +52,34 @@ export default function Cart() {
     return (
         <>
             <ScrollToTop />
+            <div className="section-margin">
+                {allProducts?.length > 0 && <p className='fs-500 fw-semi-bold margin-block-100'>Shopping Cart</p>}
+                {cartVariants.length === 0 ? <>
+                    <div className='empty-cart'>
+                        <div>
+                            <div className='margin-block-100'>
+                                <h2>SHOPPING CART</h2>
+                                <p>Home \ Shopping Cart</p>
+                            </div>
+                            <div className=''>
+                                <GiShoppingCart />
+                            </div>
+                            <p className='fs-600 fw-bold margin-block-400'>Your Cart Is Currently Empty!</p>
+                            <p>Before your proceed to checkout your must first add some products to your shopping cart.</p>
+                            <p className='margin-block-50'>You will find a lot of interesting products in our "Products" page.</p>
 
-            {cartVariants.length === 0 ? <>
-                <div className='empty-cart'>
-                    <div>
-                        <div className='margin-block-100'>
-                            <h2>SHOPPING CART</h2>
-                            <p>Home \ Shopping Cart</p>
-                        </div>
-                        <div className=''>
-                            <GiShoppingCart />
-                        </div>
-                        <p className='fs-600 fw-bold margin-block-400'>Your Cart Is Currently Empty!</p>
-                        <p>Before your proceed to checkout your must first add some products to your shopping cart.</p>
-                        <p className='margin-block-50'>You will find a lot of interesting products in our "Products" page.</p>
-
-                        <div className='margin-block-600'>
-                            <Link to={"/products"} className='button' data-type='bg-blue'>All Aroducts</Link>
+                            <div className='margin-block-600'>
+                                <Link to={"/products"} className='button' data-type='bg-blue'>All Aroducts</Link>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </> : allProducts !== null ? <div className='cart-page section-margin'>
-                <>
-                    <CartItems allProducts={allProducts} cartVariants={cartVariants} setCartVariants={setCartVariants} removeFromCart={removeFromCart} />
-                    <CartSubtotal cartVariants={cartVariants} allProducts={allProducts} />
-                </>
-            </div> : <Loader />}
+                </> : allProducts !== null ? <div className='cart-page'>
+                    <>
+                        <CartItems allProducts={allProducts} cartVariants={cartVariants} setCartVariants={setCartVariants} removeFromCart={removeFromCart} />
+                        <CartSubtotal cartVariants={cartVariants} allProducts={allProducts} />
+                    </>
+                </div> : <Loader />}
+            </div>
         </>
 
     )

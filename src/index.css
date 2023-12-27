@@ -216,6 +216,7 @@ button{
 
 button{
   transition: all 300ms;
+  cursor: pointer;
 }
 
 .button{

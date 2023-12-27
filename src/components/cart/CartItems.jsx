@@ -27,48 +27,54 @@ export default function CartItems({ allProducts, cartVariants, setCartVariants, 
             }
         }))
     }
+
+
     return (
-        <div className="cart-items">
-            {allProducts?.map((product) => <div key={product?.id} className="cart-item">
-                <div className="cart-item__image">
-                    <Link to={`/productdetails/${product.id}`}>
-                        {/* find the index of the cart item color in the allProducts current item colors array */}
-                        <img src={product?.images[product.colors.findIndex(color => color === cartVariants.find(item => item.id === product.id).color)]} alt={product?.model} />
-                    </Link>
-                </div>
-                <div className="cart-item__desc">
-                    <div className='cart-item_flex'>
-                        <p className='fs-250'>{product?.brand} {product?.model}</p>
-                        <div className="remove-from-cart" onClick={() => removeFromCart(product?.id)}><RxCrossCircled /></div>
+        <>
+            <div className="cart-items">
+                {allProducts?.map((product) => <div key={product?.id} className="cart-item">
+                    <div className="cart-item__image">
+                        <Link to={`/productdetails/${product.id}`}>
+                            {/* find the index of the cart item color in the allProducts current item colors array */}
+                            <img src={product?.images[product?.colors.findIndex(color => color === cartVariants.find(item => item.id === product.id)?.color)]} alt={product?.model} />
+                        </Link>
                     </div>
 
-                    <div className='cart-item__color_storage margin-block-100'>
-                        <div className='cart-item-border'>
-                            <span className='fw-semi-bold' title={cartVariants?.find(item => item.id === product?.id)?.color}>Color:</span>
-                            <div
-                                className='cart-item__color'
-                                style={{ backgroundColor: cartVariants.find(item => item.id === product?.id)?.color }}
-                                title={cartVariants.find(item => item.id === product?.id)?.color}
-                            ></div>
+                    <div className="cart-item__desc">
+                        <div className='cart-item_flex'>
+                            <p className='fs-250'>{product?.model}</p>
+                            <div className="remove-from-cart" onClick={() => removeFromCart(product?.id)}><RxCrossCircled /></div>
                         </div>
 
-                        {product.storage && <p className='cart-item-border'>
-                            <span className='fw-semi-bold'>Size:</span>
-                            {cartVariants.find(item => item.id === product?.id)?.storage} GB
-                        </p>}
-                    </div>
+                        <div className='cart-item__color_storage margin-block-100'>
+                            <div className='cart-item-border'>
+                                <span className='fw-semi-bold' title={cartVariants?.find(item => item.id === product?.id)?.color}>Color:</span>
+                                <div
+                                    className='cart-item__color'
+                                    style={{ backgroundColor: cartVariants.find(item => item.id === product?.id)?.color }}
+                                    title={cartVariants.find(item => item.id === product?.id)?.color}
+                                ></div>
+                            </div>
 
-                    <div className='cart-item_flex'>
-                        <p className='fw-semi-bold fs-300'>${product?.price}</p>
-                        <div className="quantity-buttons">
-                            <button onClick={() => quantityDecrease(product?.id)}>-</button>
-                            <span>{cartVariants.find(item => item.id === product?.id)?.quantity}</span>
-                            <button onClick={() => quantityIncrement(product?.id)}>+</button>
+                            {product.storage && <p className='cart-item-border'>
+                                <span className='fw-semi-bold'>Size:</span>
+                                {cartVariants.find(item => item.id === product?.id)?.storage} GB
+                            </p>}
                         </div>
-                    </div>
-                </div>
-            </div>)}
 
-        </div>
+                        <div className='cart-item_flex'>
+                            <p className='fw-semi-bold fs-300'>${product?.price}</p>
+                            <div className="quantity-buttons">
+                                <button onClick={() => quantityDecrease(product?.id)}>-</button>
+                                <span>{cartVariants.find(item => item.id === product?.id)?.quantity}</span>
+                                <button onClick={() => quantityIncrement(product?.id)}>+</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>)}
+
+            </div>
+        </>
     )
 }
