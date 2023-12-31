@@ -1,5 +1,6 @@
 .filter-wrapper{
     position: relative;
+    /* height: calc(100vh-100px); */
     inset: none;
     overflow-y: scroll;
 }
@@ -17,10 +18,14 @@
     justify-content: space-between;
     align-items: center;
     position: sticky;
-    top: 0;
+    /* top: 0; */
     background-color: white;
 }
 
+.filter-body{
+    overflow-y: scroll;
+    /* height: max-content; */
+}
 .filter-title, .filter-body{
     padding: 10px;
 }
@@ -98,24 +103,6 @@
 }
 
 
-/* .filter-by-brand select{
-    width: 100%;
-    padding: 10px 2px;    
-    border-radius: 5px;
-    accent-color: black;
-    background-color: white;
-    border: 1px solid var(--light-gray);
-    padding-block: 10px;
-} */
-
-/* .filter-by-brand option{
-    padding: 10px;
-    display: inline-block;
-    width: 100%;
-} */
-
-
-
 
 /* EXPAND COMPONENT */
 .expand{
@@ -148,6 +135,7 @@
     display: flex;
     justify-content: center;
 }
+
 .apply-filter-btn{
     border: none;
     width: 90%;
@@ -157,6 +145,11 @@
 }
 
 
+.title-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 @media screen and (min-width: 765px) {
     .filter-close-button{
         display: none;
@@ -171,7 +164,6 @@
     .filter-wrapper{
         position: fixed;
         inset: 0;
-        top: 60px;
         background-color: white;
         z-index: 11;
         display: none;

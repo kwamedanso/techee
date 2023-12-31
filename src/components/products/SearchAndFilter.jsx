@@ -4,7 +4,7 @@ import "components/products/styles/searchAndFilter.css"
 import AllFilters from './AllFilters';
 
 
-export default function SearchAndFilter({ getUserSearch, userselectionFilter, getBrandSelection, getCategorySelection }) {
+export default function SearchAndFilter({ getUserSearch, userselectionFilter, getBrandSelection, getCategorySelection, getPriceRange, minPrice, maxPrice, brand, category }) {
     const [search, setSearch] = useState("");
     const [filterEnabled, setFilterEnabled] = useState(false);
 
@@ -43,7 +43,7 @@ export default function SearchAndFilter({ getUserSearch, userselectionFilter, ge
             <div className={`${filterEnabled ? "filter-overlay" : ""}`} onClick={handleFilterButton}></div>
 
             {filterEnabled && <div className='filter-mobile'>
-                <AllFilters active={filterEnabled} setFilterEnabled={setFilterEnabled} handleFilterButton={handleFilterButton} userselectionFilter={userselectionFilter} getBrandSelection={getBrandSelection} getCategorySelection={getCategorySelection} />
+                <AllFilters active={filterEnabled} setFilterEnabled={setFilterEnabled} handleFilterButton={handleFilterButton} userselectionFilter={userselectionFilter} getBrandSelection={getBrandSelection} getCategorySelection={getCategorySelection} getPriceRange={getPriceRange} minPrice={minPrice} maxPrice={maxPrice} brand={brand} category={category} />
             </div>}
         </>
     )

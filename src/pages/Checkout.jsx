@@ -1,39 +1,27 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import Context from 'context';
-import supabase from 'config/supabaseClient';
 import Loader from 'components/shared/Loader';
+import useFetchSupabase from 'hooks/useFetchSupabase';
+
 export default function Checkout() {
-    const [allProducts, setAllProducts] = useState(null);
-    const [fetchError, setFetchError] = useState(null)
-
     let value = useContext(Context)
-    let { state: { cart }, actions: { setCart } } = value;
+    let { state: { cartVariants } } = value;
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const { data, error } = await supabase
-                .from("products")
-                .select()
-                .in("id", cart)
 
-            if (error) {
-                console.log("Could not fetch data")
-                setFetchError(error)
-                setAllProducts(null)
-            } else {
-                setFetchError(null)
-                setAllProducts(data)
-            }
-        }
+    let cartProductIds = []
+    for (let i = 0; i < cartVariants?.length; i++) {
+        cartProductIds.push(cartVariants[i].id)
+    }
 
-        fetchData();
-    }, [])
+
+    let { allData } = useFetchSupabase({ table: "products", select: "*", inc: { column: "id", value: cartProductIds } })
 
 
     return (
         <div>
-            {allProducts ? <div>
-                {allProducts?.map(prodcut => <div key={prodcut?.id}>
+            Checkout
+            {allData ? <div>
+                {allData?.map(prodcut => <div key={prodcut?.id}>
                     <img style={{ width: "100px" }} src={prodcut.images[0]} alt="" />
                     <p>{prodcut.brand} {prodcut.model}</p>
                     <p>${prodcut.price}</p>

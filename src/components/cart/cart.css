@@ -163,6 +163,6 @@
         position: sticky;
         top: 70px;
         min-height: 190px;
-        max-height: 500px;
+        height: max-content;
     }
 }

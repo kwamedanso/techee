@@ -6,21 +6,22 @@ import ScrollToTop from 'components/shared/ScrollToTop'
 import SearchAndFilter from 'components/products/SearchAndFilter'
 import "components/products/styles/allProducts.css"
 import AllFilters from 'components/products/AllFilters'
-import supabase from 'config/supabaseClient'
 import Loader from 'components/shared/Loader'
+import useFetchSupabase from 'hooks/useFetchSupabase'
 
 export default function AllProducts() {
-    const [allProducts, setAllProducts] = useState(null)
-    // const [fetchError, setFetchError] = useState(null)
     const [searchParams, setSearchParams] = useSearchParams();
     const [filteredProducts, setFilteredProducts] = useState(null);
 
+    const { allData } = useFetchSupabase({ table: "products", select: "*" })
 
 
     const search = searchParams.get("search")
     const page = Number(searchParams.get("page")) || 1
     const brand = searchParams.get("brand")
     const category = searchParams.get("category")
+    const minPrice = searchParams.get("minPrice") || ""
+    const maxPrice = searchParams.get("maxPrice") || ""
 
 
     const postsPerPage = 15;
@@ -29,84 +30,49 @@ export default function AllProducts() {
     const lastPost = postsPerPage * Number(page);
     const firstPost = lastPost - postsPerPage;
 
-    // Fetch products from supabase
-    useEffect(() => {
-        const fetchData = async () => {
-            const { data, error } = await supabase
-                .from("products")
-                .select()
 
-            if (error) {
-                console.log(error)
-                // setFetchError("Sorry an error occurred white fetching data")
-                setAllProducts(null)
-            } else {
-                setAllProducts(data)
-                // setFetchError(null)
-            }
-        }
-
-        fetchData()
-    }, [])
 
     useEffect(() => {
         if (search) {
-            // searchFilter(allProducts)
-            let products = allProducts?.filter(product => product?.brand.toLowerCase().includes(search.toLowerCase()) || product?.category.toLowerCase().includes(search.toLowerCase()) || product?.model.toLowerCase().includes(search.toLowerCase()));
-            setFilteredProducts(products);
-
+            let products = allData?.filter(product => product?.brand.toLowerCase().includes(search.toLowerCase()) || product?.category.toLowerCase().includes(search.toLowerCase()) || product?.model.toLowerCase().includes(search.toLowerCase()));
+            let finalProducts = priceFilter(products)
+            setFilteredProducts(finalProducts);
         } else if (brand && !category) {
-            // brandFilter(allProducts)
-            let products = allProducts?.filter(product => product?.brand.toLowerCase() === brand.toLowerCase())
-            setFilteredProducts(products)
-
+            let products = allData?.filter(product => product?.brand.toLowerCase() === brand.toLowerCase())
+            let finalProducts = priceFilter(products)
+            setFilteredProducts(finalProducts);
         } else if (category && !brand) {
-            // categoryFilter(allProducts)
-            let products = allProducts?.filter(product => product?.category.toLowerCase() === category.toLowerCase())
-            setFilteredProducts(products)
-
+            let products = allData?.filter(product => product?.category.toLowerCase() === category.toLowerCase())
+            let finalProducts = priceFilter(products)
+            setFilteredProducts(finalProducts);
         } else if (category && brand) {
-            // bothFilter(allProducts)
-            let products = allProducts?.filter(product => product?.brand.toLowerCase() === brand.toLowerCase() && product?.category.toLowerCase() === category.toLowerCase());
-            setFilteredProducts(products)
-
-        } else {
-            setFilteredProducts(allProducts)
+            let products = allData?.filter(product => product?.brand.toLowerCase() === brand.toLowerCase() && product?.category.toLowerCase() === category.toLowerCase());
+            let finalProducts = priceFilter(products)
+            setFilteredProducts(finalProducts);
         }
-    }, [search, brand, category, allProducts])
+        else {
+            const finalProducts = priceFilter(allData)
+            setFilteredProducts(finalProducts)
+        }
+    }, [search, brand, category, allData, minPrice, maxPrice])
 
 
 
-
-    function searchFilter(data) {
-        let products = data?.filter(product => product?.brand.toLowerCase().includes(search.toLowerCase()) || product?.category.toLowerCase().includes(search.toLowerCase()) || product?.model.toLowerCase().includes(search.toLowerCase()));
-        setFilteredProducts(products);
+    function priceFilter(arr) {
+        if (minPrice && !maxPrice) {
+            return arr?.filter(product => product.price > Number(minPrice))
+        } else if (!minPrice && maxPrice) {
+            return arr?.filter(product => product.price < Number(maxPrice))
+        } else if (minPrice && maxPrice) {
+            if (Number(minPrice) > Number(maxPrice)) {
+                return []
+            } else {
+                return arr?.filter(product => product.price > Number(minPrice) && product.price < Number(maxPrice))
+            }
+        } else {
+            return arr
+        }
     }
-
-    // function brandFilter(data) {
-    //     let products = data?.filter(product => product?.brand.toLowerCase() === brand.toLowerCase())
-    //     setFilteredProducts(products)
-    // }
-
-    // function categoryFilter(data) {
-    //     let products = data?.filter(product => product?.category.toLowerCase() === category.toLowerCase())
-    //     setFilteredProducts(products)
-    // }
-
-    // function bothFilter(data) {
-    //     let products = data?.filter(product => product?.brand.toLowerCase() === brand.toLowerCase() && product?.category.toLowerCase() === category.toLowerCase());
-    //     setFilteredProducts(products)
-    // }
-
-
-
-
-
-
-
-
-
-
 
 
     // Function to reset currentPage to 1
@@ -145,7 +111,6 @@ export default function AllProducts() {
             prev.set("search", userSearch)
             return prev
         }, { replace: true })
-        // searchFilter(allProducts)
     }
 
 
@@ -171,16 +136,25 @@ export default function AllProducts() {
     }
 
 
+    function getPriceRange(min, max) {
+        setSearchParams(prev => {
+            prev.set("minPrice", min)
+            prev.set("maxPrice", max)
+            return prev
+        }, { replace: true })
+    }
+
+
     return (
         <>
             <ScrollToTop />
             <div className='all-products-wrapper section-margin'>
-                <SearchAndFilter getUserSearch={getUserSearch} searchFilter={searchFilter} getBrandSelection={getBrandSelection} getCategorySelection={getCategorySelection} setFilteredProducts={setFilteredProducts} />
+                <SearchAndFilter getUserSearch={getUserSearch} getBrandSelection={getBrandSelection} getCategorySelection={getCategorySelection} setFilteredProducts={setFilteredProducts} getPriceRange={getPriceRange} minPrice={minPrice} maxPrice={maxPrice} brand={brand} category={category} />
 
 
                 <div className="all-products margin-block-100">
                     <div className="filter-desktop">
-                        <AllFilters getBrandSelection={getBrandSelection} getCategorySelection={getCategorySelection} />
+                        <AllFilters getBrandSelection={getBrandSelection} getCategorySelection={getCategorySelection} getPriceRange={getPriceRange} minPrice={minPrice} maxPrice={maxPrice} brand={brand} category={category} />
                     </div>
 
                     <div className='padding-block-100'>
