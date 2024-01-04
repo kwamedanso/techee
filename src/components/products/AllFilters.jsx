@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { RxCross2 } from 'react-icons/rx';
 import scrollToTop from 'utils/SCROLLT0TOP';
-import Expand from './Expand';
 import "components/products/styles/allFilters.css"
 
 const categories = ["Phones", "Laptops", "Headsets", "Watch", "Tablets", "Console"]
@@ -46,7 +45,6 @@ export default function AllFilters({ active, handleFilterButton, getBrandSelecti
 
 
             <div className="filter-body">
-                {/* <Expand title={"Price Range"}> */}
                 <div className="filter-by-price padding-block-10">
                     <p className='title-flex margin-block-50'>
                         <span className='fs-250 fw-semi-bold'>Price</span>
@@ -64,9 +62,7 @@ export default function AllFilters({ active, handleFilterButton, getBrandSelecti
                         </div>
                     </div>
                 </div>
-                {/* </Expand> */}
 
-                {/* <Expand title={"Category"}> */}
                 <div className="filter-by-category padding-block-10">
                     <p className='margin-block-50 title-flex'>
                         <span className='fs-250 fw-semi-bold'>Category</span>
@@ -80,11 +76,8 @@ export default function AllFilters({ active, handleFilterButton, getBrandSelecti
                             </label>
                         </div>)}
                     </div>
-
                 </div>
-                {/* </Expand> */}
 
-                {/* <Expand title={"Brands"}> */}
                 <div className="filter-by-brand padding-block-5000">
                     <p className=' margin-block-50 title-flex'>
                         <span className='fs-250 fw-semi-bold'>Brand</span>
@@ -98,9 +91,7 @@ export default function AllFilters({ active, handleFilterButton, getBrandSelecti
                             </label>
                         </div>)}
                     </div>
-
                 </div>
-                {/* </Expand> */}
             </div>
         </div>
     )

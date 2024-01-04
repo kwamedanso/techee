@@ -8,6 +8,7 @@ import "components/products/styles/allProducts.css"
 import AllFilters from 'components/products/AllFilters'
 import Loader from 'components/shared/Loader'
 import useFetchSupabase from 'hooks/useFetchSupabase'
+import { RxCross2 } from "react-icons/rx";
 
 export default function AllProducts() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -145,6 +146,20 @@ export default function AllProducts() {
     }
 
 
+    function clearBrandSelection() {
+        setSearchParams(prev => {
+            prev.delete("brand")
+            return prev
+        }, { replace: true })
+    }
+
+    function clearCategorySelection() {
+        setSearchParams(prev => {
+            prev.delete("category")
+            return prev
+        }, { replace: true })
+    }
+
     return (
         <>
             <ScrollToTop />
@@ -157,13 +172,27 @@ export default function AllProducts() {
                         <AllFilters getBrandSelection={getBrandSelection} getCategorySelection={getCategorySelection} getPriceRange={getPriceRange} minPrice={minPrice} maxPrice={maxPrice} brand={brand} category={category} />
                     </div>
 
-                    <div className='padding-block-100'>
+                    <div className='padding-block-10'>
                         {!filteredProducts && <Loader />}
                         {filteredProducts?.length === 0 && <div><h1>No products meet the current filter</h1></div>}
 
-                        {filteredProducts?.length > 0 && <AvailableProducts
-                            availableProducts={filteredProducts?.slice(firstPost, lastPost)}
-                        />}
+                        {filteredProducts?.length > 0 && <>
+                            {(category || brand) && <div className="current-filters_wrapper">
+                                <>
+                                    {category && <div className='current-filters_item'>
+                                        <span>{category}</span>
+                                        <span><RxCross2 onClick={clearCategorySelection} /></span>
+                                    </div>}
+
+                                    {brand && <div className='current-filters_item'>
+                                        <span>{brand}</span>
+                                        <span><RxCross2 onClick={clearBrandSelection} /></span>
+                                    </div>}
+                                </>
+
+                            </div>}
+                            <AvailableProducts availableProducts={filteredProducts?.slice(firstPost, lastPost)} />
+                        </>}
                     </div>
                 </div>
 

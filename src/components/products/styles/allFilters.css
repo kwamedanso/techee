@@ -150,6 +150,37 @@
     justify-content: space-between;
     align-items: center;
 }
+
+
+
+.current-filters_wrapper{
+    display: flex;
+    gap: 1rem;
+    margin-block: .5rem 1rem;
+}
+
+.current-filters_item{
+    border: 1px solid var(--dark-gray);
+    padding: 7px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+}
+
+
+.current-filters_item span:nth-child(2){
+    border-left: 1px solid var(--light-gray);
+    padding-left: .4rem;
+}
+.current-filters_item svg{
+    display: flex;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+
+
 @media screen and (min-width: 765px) {
     .filter-close-button{
         display: none;
