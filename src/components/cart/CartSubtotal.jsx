@@ -62,7 +62,7 @@ export default function CartSubtotal({ cartVariants, allProducts }) {
                         <div className='order-padding'>
                             <p className='cart-summary-flex fs-30'>
                                 <span>Order Total</span>
-                                {allProducts.length === 0 ? <span>$0</span> : <span className='fs-250 fw-semi-bold'>${totalSum}</span>}
+                                {allProducts.length === 0 ? <span>$0</span> : <span className='fs-400 fw-semi-bold'>${totalSum}</span>}
                             </p>
                         </div>
                     </div>
