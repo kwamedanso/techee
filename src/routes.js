@@ -5,6 +5,7 @@ import Checkout from "pages/Checkout";
 import Cart from "pages/Cart";
 import ProductDetails from "pages/ProductDetails";
 import NotFound from "pages/NotFound";
+import Success from "pages/Success";
 
 const privateRoutes = [
     {
@@ -34,6 +35,10 @@ const privateRoutes = [
     {
         path: "/cart",
         element: <Cart />
+    },
+    {
+        path: "/success",
+        element: <Success />
     },
     {
         path: "*",
