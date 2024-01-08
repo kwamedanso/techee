@@ -304,7 +304,16 @@ button{
 
 .flex{
   display: flex;
+  /* align-items: center; */
+}
+.ai-center{
   align-items: center;
+}
+.jc-center{
+  justify-content: center;
+}
+.jc-sb{
+  justify-content: space-between;
 }
 .gap-100{
   gap: .25rem;
