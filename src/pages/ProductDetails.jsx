@@ -1,8 +1,6 @@
-import { Suspense, lazy } from 'react';
 import { useParams } from 'react-router-dom'
 import "components/productDeatils/styles/productDetails.css"
-import Loader from 'components/shared/Loader';
-const Main = lazy(() => import("components/productDeatils/Main"))
+import Main from 'components/productDeatils/Main';
 
 export default function ProductDetails() {
     const params = useParams();
@@ -11,9 +9,7 @@ export default function ProductDetails() {
 
     return (
         <>
-            <Suspense fallback={<Loader />}>
-                <Main productId={productId} />
-            </Suspense>
+            <Main productId={productId} />
         </>
     )
 }

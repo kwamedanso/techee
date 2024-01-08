@@ -11,6 +11,7 @@ import AvailableProducts from 'components/shared/AvailableProducts';
 import ScrollToTop from 'components/shared/ScrollToTop';
 import supabase from 'config/supabaseClient';
 import AddToCart from 'components/productDeatils/AddToCart';
+import Loader from 'components/shared/Loader';
 
 export default function Main({ productId }) {
     const [currentProduct, setCurrentProduct] = useState(null);
@@ -76,7 +77,7 @@ export default function Main({ productId }) {
     return (
         <div>
             <ScrollToTop />
-            <div className='product-details-wrapper section-margin'>
+            {!currentProduct ? <Loader /> : <div className='product-details-wrapper section-margin'>
 
                 <Title id={currentProduct?.id} />
 
@@ -126,7 +127,7 @@ export default function Main({ productId }) {
                     <p className='fs-500 fw-semi-bold margin-block-100'>Similar Products</p>
                     <AvailableProducts category availableProducts={sameCategory} />
                 </div>}
-            </div >
+            </div >}
         </div>
     )
 }
