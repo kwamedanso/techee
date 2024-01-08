@@ -1,0 +1,20 @@
+.success-page{
+    width: min(750px, 85%);
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+
+.success-page img{
+    width: 250px;
+    aspect-ratio: 1/1;
+    object-fit: contain;
+    margin: 0 auto;
+}
+
+.success-page a{
+    text-decoration: underline;
+    color: var(--primary-blue);
+    text-underline-offset: 3px;
+}
