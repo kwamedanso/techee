@@ -1,0 +1,103 @@
+.checkout-grid{
+    display: grid;
+    grid-template-areas: 
+    "overview"
+    "payment";
+    gap: 2rem;
+}
+
+
+.shipping-info, .payment-card{
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .125);
+}
+
+.checkout-payment{
+    display: grid;
+    gap: 1rem;
+    grid-area: payment;
+}
+
+.shipping-info div{
+    display: flex;
+    justify-content: space-between;
+}
+
+.shipping-info div p{
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+    cursor: pointer;
+}
+
+.card-payment_icons{
+    display: flex;
+    align-items: center;
+    gap: .2rem;
+}
+
+.card-payment_icons svg{
+    font-size: 2rem;
+}
+
+form .card-details input[type="text"], form .card-details input[type="date"]{
+    /* display: inline-block; */
+    width: 100%;
+    border: 1px solid var(--light-gray);
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 10px;
+}
+
+.expiry, .cvv{
+    flex-basis: 1;
+    margin-top: .4rem;
+}
+
+.checkout-payment .card-details button{
+    padding: .8rem 4rem;
+}
+
+@media screen and (min-width:700px) and (max-width: 900px) {
+    .checkout-grid{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+    }
+}
+
+
+@media screen and (min-width:901px) {
+    .expiry, .cvv{
+        flex-basis: 50%;
+    }
+    .checkout-grid{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 7rem;
+    }
+
+}
+
+@media screen and (min-width: 700px) {
+    .checkout-grid{
+        grid-template-areas: 
+        "payment overview";
+    }
+    .expiry-cvv{
+        display: flex;
+        gap: .3rem;
+    }
+    .expiry, .cvv{
+        margin-top: 0;
+    }
+
+    .checkout-overview{
+        position: sticky;
+        top: 60px;
+        min-height: 190px;
+        height: max-content;
+        grid-area: overview;
+    }
+}
