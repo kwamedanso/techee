@@ -180,12 +180,12 @@ export default function AllProducts() {
                             {(category || brand) && <div className="current-filters_wrapper">
                                 <>
                                     {category && <div className='current-filters_item'>
-                                        <span>{category}</span>
+                                        <span><span className='op-200 fs-150'>Category</span>: {category}</span>
                                         <span><RxCross2 onClick={clearCategorySelection} /></span>
                                     </div>}
 
                                     {brand && <div className='current-filters_item'>
-                                        <span>{brand}</span>
+                                        <span><span className='op-200'>Brand</span>: {brand}</span>
                                         <span><RxCross2 onClick={clearBrandSelection} /></span>
                                     </div>}
                                 </>
