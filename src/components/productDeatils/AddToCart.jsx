@@ -13,8 +13,12 @@ export default function AddToCart({ id, varianInfo, setVariantInfo }) {
     let itemExist = cartVariants.some(item => item.id === id)
 
     function handleCheckout(productId) {
-        addToCart(productId);
-        navigate(`/checkout`)
+        if (varianInfo.storage || varianInfo.color) {
+            addToCart(productId);
+            navigate(`/checkout`)
+        } else {
+            setIsActive(true)
+        }
     }
 
     function addToCart(productId) {
