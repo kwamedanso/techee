@@ -2,11 +2,13 @@ import React from 'react'
 import "components/success/success.css"
 import { Link } from 'react-router-dom';
 import payment from "assets/payment.png"
+import ScrollToTop from 'components/shared/ScrollToTop';
 
 
 export default function Success() {
     return (
         <div className='success-page section-margin text-align fs-300'>
+            <ScrollToTop />
             <div>
                 <div className='margin-block-100'>
                     <img src={payment} alt="payment" />
