@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { LuPencilLine } from "react-icons/lu";
 import { LiaCcVisa } from "react-icons/lia";
 import { FaCcPaypal, FaCcMastercard, FaCcApplePay } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
+import Context from 'context';
 
 
 export default function PaymentInfo() {
+    let value = useContext(Context)
+    let { actions: { setCartVariants } } = value
     const [userInfo, setUserInfo] = useState({ name: "", cardNumber: "", expiry: "", cvv: "" })
 
 
@@ -18,6 +21,7 @@ export default function PaymentInfo() {
 
     function checkout(e) {
         // e.preventDefault();
+        setCartVariants([])
         navigate("/success")
     }
 
