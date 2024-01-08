@@ -5,6 +5,7 @@ import Category from 'components/home/Category'
 import React from 'react'
 import ScrollToTop from 'components/shared/ScrollToTop'
 import Hero from 'components/home/Hero'
+import CTA from 'components/home/CTA'
 
 export default function Home() {
 
@@ -16,6 +17,7 @@ export default function Home() {
             <Category />
             <Benefits />
             <Faq />
+            <CTA />
         </>
     )
 }
