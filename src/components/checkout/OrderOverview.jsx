@@ -17,7 +17,7 @@ export default function OrderOverview({ allData, cartVariants }) {
 
                             <div className="cart-item__desc">
                                 <div className='cart-item_flex'>
-                                    <p className='fs-250'>{product.brand} {product?.model}</p>
+                                    <p className='fs-250'>{product?.model}</p>
                                 </div>
 
                                 <div className='cart-item__color_storage margin-block-100'>
