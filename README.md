@@ -1,6 +1,53 @@
-# Getting Started with Create React App
+# Techee | E-commerce React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+This ecommerce platform if a cutting-edge, highly responsive web application designed to provide and exceptional shopping experience. It leverages the powerful React.js framework for seamless, dynamic user interfaces and Supabase for scalable, serverless backend capabilities, including database management, authentication, and real-tie data synchronization.
+
+## Technology Stack
+- FrontEnd: React.js - A Javascript library for building user interfaces with efficient, declarative components.
+- Backend: Supabase - An open-source Firebase alternative, providing database storage, real-time data capabilities, user authentication, and automatic scaling.
+- State Management: Context API (based on requirements) - For managing application state across various components.
+- Styling: CSS - For modern, responsive design with a mobile-first approach.
+
+## Current Features
+- Home Page
+- Products (List all products)
+- Filter and Sort Products by Price, Category and Brand
+- Product Details
+- Similar/Recommended Products
+- Cart and Checkout System
+- Responsive Design
+
+## Future Features
+- Login/Register: User Authentication.
+
+  
+Visit a live demo of this app -> [Techee E-Commerce App](https://techee.netlify.app).
+
+## Screenshots of the various pages
+
+### Home Page
+![Techee-Home-page](https://github.com/kwamedanso/Story2/assets/13033671/12203717-50be-45b2-8916-d31cd46db426)
+
+### All Products Page 
+![Techee-Products](https://github.com/kwamedanso/Story2/assets/13033671/404355a4-1604-4359-9cd0-6f2368d43c0b)
+
+### Product Details
+![Techee-ProductDetails](https://github.com/kwamedanso/Story2/assets/13033671/80078bff-c3eb-4c75-97d2-b590d2b40617)
+
+### Shopping Cart
+![Techee-ShoppingCart](https://github.com/kwamedanso/Story2/assets/13033671/f89d30ca-8927-44bf-ae8a-7226b9224bf0)
+
+### Checkout
+![Techee-Checkout](https://github.com/kwamedanso/Story2/assets/13033671/870fdbca-4802-4c9f-a077-d3e49b374a51)
+
+### Successful Payment
+![Techee-PurchaseSuccessful](https://github.com/kwamedanso/Story2/assets/13033671/e864c806-5c4a-4a48-b2b4-f2fdc6cb0464)
+
+
+
+
+
 
 ## Available Scripts
 
