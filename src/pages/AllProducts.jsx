@@ -7,14 +7,33 @@ import SearchAndFilter from 'components/products/SearchAndFilter'
 import "components/products/styles/allProducts.css"
 import AllFilters from 'components/products/AllFilters'
 import Loader from 'components/shared/Loader'
-import useFetchSupabase from 'hooks/useFetchSupabase'
 import { RxCross2 } from "react-icons/rx";
+import useFetch from 'hooks/useFetch'
 
 export default function AllProducts() {
     const [searchParams, setSearchParams] = useSearchParams();
     const [filteredProducts, setFilteredProducts] = useState(null);
 
-    const { allData } = useFetchSupabase({ table: "products", select: "*" })
+    let allProducts = null;
+
+    useEffect(() => {
+        async function fetchProducts() {
+            try {
+                const response = await fetch("/allProducts.json");
+                if (!response.ok) {
+                    throw new Error("Unable to fetch products");
+                }
+                const data = await response.json()
+                allProducts = data;
+                setFilteredProducts(data)
+            } catch (error) {
+
+            }
+        }
+        fetchProducts();
+    }, [allProducts])
+    console.log(allProducts)
+
 
 
     const search = searchParams.get("search")
@@ -35,27 +54,27 @@ export default function AllProducts() {
 
     useEffect(() => {
         if (search) {
-            let products = allData?.filter(product => product?.brand.toLowerCase().includes(search.toLowerCase()) || product?.category.toLowerCase().includes(search.toLowerCase()) || product?.model.toLowerCase().includes(search.toLowerCase()));
+            let products = allProducts?.filter(product => product?.brand.toLowerCase().includes(search.toLowerCase()) || product?.category.toLowerCase().includes(search.toLowerCase()) || product?.model.toLowerCase().includes(search.toLowerCase()));
             let finalProducts = priceFilter(products)
             setFilteredProducts(finalProducts);
         } else if (brand && !category) {
-            let products = allData?.filter(product => product?.brand.toLowerCase() === brand.toLowerCase())
+            let products = allProducts?.filter(product => product?.brand.toLowerCase() === brand.toLowerCase())
             let finalProducts = priceFilter(products)
             setFilteredProducts(finalProducts);
         } else if (category && !brand) {
-            let products = allData?.filter(product => product?.category.toLowerCase() === category.toLowerCase())
+            let products = allProducts?.filter(product => product?.category.toLowerCase() === category.toLowerCase())
             let finalProducts = priceFilter(products)
             setFilteredProducts(finalProducts);
         } else if (category && brand) {
-            let products = allData?.filter(product => product?.brand.toLowerCase() === brand.toLowerCase() && product?.category.toLowerCase() === category.toLowerCase());
+            let products = allProducts?.filter(product => product?.brand.toLowerCase() === brand.toLowerCase() && product?.category.toLowerCase() === category.toLowerCase());
             let finalProducts = priceFilter(products)
             setFilteredProducts(finalProducts);
         }
         else {
-            const finalProducts = priceFilter(allData)
+            const finalProducts = priceFilter(allProducts)
             setFilteredProducts(finalProducts)
         }
-    }, [search, brand, category, allData, minPrice, maxPrice])
+    }, [search, brand, category, allProducts, minPrice, maxPrice])
 
 
 

@@ -6,7 +6,6 @@ import { BiCartAdd } from "react-icons/bi"
 import { BsStarFill } from "react-icons/bs"
 import { Link } from 'react-router-dom';
 import { RxCross2, RxCrossCircled } from "react-icons/rx"
-import supabase from 'config/supabaseClient';
 
 
 export default function Favorites({ active, setActiveFavorites }) {
@@ -15,22 +14,28 @@ export default function Favorites({ active, setActiveFavorites }) {
     let value = useContext(Context);
     let { state: { favorites, toastNotification }, actions: { setFavorites } } = value;
 
+    // let image = Object.values(colors[0]);
+
 
 
     useEffect(() => {
         const fetchData = async () => {
-            const { data, error } = await supabase
-                .from("products")
-                .select()
-                .in("id", [...favorites])
-
-            if (error) {
-                console.log("Could not fetch products")
-                setAllProducts(null)
-                setFetchError(error)
-            } else {
-                setAllProducts(data)
+            try {
+                const response = await fetch("/allProducts.json")
+                if (!response.ok) {
+                    setFetchError("Unable to fectch favorites")
+                    setAllProducts(null)
+                    throw new Error("Unable to Fetch favorites.")
+                }
+                const data = await response.json();
+                console.log(data)
                 setFetchError(null)
+                let favoriteProduct = data.filter((product) => favorites.includes(product.id))
+                console.log(favoriteProduct)
+                setAllProducts(favoriteProduct)
+
+            } catch (error) {
+                console.log(error)
             }
         }
 
@@ -70,7 +75,7 @@ export default function Favorites({ active, setActiveFavorites }) {
                                 <div key={favItem.id} className='favorites-item'>
                                     <div className="fav-item-image-wrapper">
                                         <Link to={`/productDetails/${favItem.id}`} >
-                                            <img src={favItem.images[0]} alt={favItem.model} />
+                                            <img src={Object.values(favItem.colors[0])[0]} alt={favItem.model} />
                                         </Link>
                                     </div>
 

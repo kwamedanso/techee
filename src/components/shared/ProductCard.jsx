@@ -5,6 +5,7 @@ import "components/shared/styles/productCard.css"
 import AddFavorite from './AddFavorite';
 
 export default function ProductCard({ id, brand, price, model, starRating, colors, images }) {
+    let image = Object.values(colors[0])
     const totalSold = (price + 20).toFixed(0);
 
     const prevPrice = (price + 20).toFixed(2);
@@ -15,7 +16,7 @@ export default function ProductCard({ id, brand, price, model, starRating, color
             <div className='product-card fw-semi-bld'>
                 <div className="product-image-wrapper">
                     <Link to={`/productDetails/${id}`}>
-                        <img src={images?.[0]} alt={model} loading='lazy' />
+                        <img src={image[0]} alt={model} loading='lazy' />
                     </Link>
                 </div>
                 <div className="produc-card-details">
@@ -28,7 +29,7 @@ export default function ProductCard({ id, brand, price, model, starRating, color
                             <p className='fs-200 fw-semi-bol margin-block-100'>{brand} {model}</p>
                         </div>
                         <div className="product-card-colors">
-                            {colors.map(color => <div key={color} className='product-card-color' style={{ backgroundColor: color }}></div>)}
+                            {colors.map((color, index) => <div key={index} className='product-card-color' style={{ backgroundColor: Object.keys(color)[0] }}></div>)}
                         </div>
                     </div>
                     <div className="product-card-footer">

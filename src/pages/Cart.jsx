@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
 import Context from 'context';
-import supabase from 'config/supabaseClient';
 import "components/cart/cart.css"
 import CartItems from 'components/cart/CartItems';
 import CartSubtotal from 'components/cart/CartSubtotal';
@@ -8,6 +7,7 @@ import Loader from 'components/shared/Loader';
 import ScrollToTop from 'components/shared/ScrollToTop';
 import { GiShoppingCart } from "react-icons/gi";
 import { Link } from 'react-router-dom';
+import useFetch from 'hooks/useFetch';
 
 
 
@@ -25,10 +25,8 @@ export default function Cart() {
             cartProductIds.push(cartVariants[i].id)
         }
         const fetchData = async () => {
-            const { data, error } = await supabase
-                .from("products")
-                .select()
-                .in("id", cartProductIds)
+            //Fetch all items available in the cart IDs.
+            const { data, error } = useFetch();
 
             if (error) {
                 console.log("Could not fetch data")

@@ -5,7 +5,7 @@ import "components/checkout/styles/checkout.css"
 import ScrollToTop from 'components/shared/ScrollToTop';
 import PaymentInfo from 'components/checkout/PaymentInfo';
 import OrderOverview from "components/checkout/OrderOverview";
-import useFetchSupabase from 'hooks/useFetchSupabase';
+import useFetch from 'hooks/useFetch';
 
 
 export default function Checkout() {
@@ -18,7 +18,9 @@ export default function Checkout() {
         cartProductIds.push(cartVariants[i].id)
     }
 
-    let { allData } = useFetchSupabase({ table: "products", select: "*", inc: { column: "id", value: cartProductIds } })
+
+
+    let { data: allData } = useFetch()
 
 
 

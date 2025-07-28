@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "components/home/styles/category.css"
 import Loader from 'components/shared/Loader'
-import supabase from 'config/supabaseClient'
 import AvailableProducts from 'components/shared/AvailableProducts'
 
 
@@ -15,23 +14,38 @@ export default function Category() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const { data, error } = await supabase
-                .from("products")
-                .select()
 
-            if (error) {
-                setFetchError("Could not get the products")
-                setAllProducts(null)
-                console.log(error)
-            } else {
-                setAllProducts(data)
+            try {
+                const response = await fetch("/allProducts.json")
+                if (!response.ok) {
+                    setFetchError("Could not fetch the products")
+                    setAllProducts(null)
+                    throw new Error("Unable to fetch products.")
+                }
+                const data = await response.json();
+                setAllProducts(data);
                 setfilteredProducts(data)
-                setFetchError(null)
+                setFetchError(null);
+                // console.log(data);
+            } catch (error) {
+                console.log(error)
             }
+
+            // if (error) {
+            //     setFetchError("Could not get the products")
+            //     setAllProducts(null)
+            //     console.log(error)
+            // } else {
+            //     setAllProducts(data)
+            //     setfilteredProducts(data)
+            //     setFetchError(null)
+            // }
         }
 
         fetchData()
+
     }, [])
+
 
 
     function handleActiveTab(btn) {

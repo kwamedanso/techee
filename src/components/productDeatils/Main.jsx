@@ -9,9 +9,9 @@ import ShowImage from 'components/productDeatils/ShowImage';
 import { LiaShippingFastSolid } from "react-icons/lia"
 import AvailableProducts from 'components/shared/AvailableProducts';
 import ScrollToTop from 'components/shared/ScrollToTop';
-import supabase from 'config/supabaseClient';
 import AddToCart from 'components/productDeatils/AddToCart';
 import Loader from 'components/shared/Loader';
+import useFetch from 'hooks/useFetch';
 
 export default function Main({ productId }) {
     const [currentProduct, setCurrentProduct] = useState(null);
@@ -23,14 +23,8 @@ export default function Main({ productId }) {
 
 
     const fetchSameCategory = async (category) => {
-        const { data, error } = await supabase
-            .from("products")
-            .select()
-            .eq("category", `${category}`)
-            .neq("id", productId)
-            .range(0, 4)
-
-
+        //Fetch four items in the same category as the current item not including the current item. 
+        const { data } = useFetch()
         if (error) {
             setFetchError("Could not fetch the products")
             setSameCategory(null)
@@ -44,11 +38,9 @@ export default function Main({ productId }) {
 
 
     useEffect(() => {
+        //Fetch the item with id of productId.
         const fetchProduct = async () => {
-            const { data, error } = await supabase
-                .from("products")
-                .select()
-                .eq("id", `${productId}`)
+            const { data, error } = useFetch()
 
             if (error) {
                 setFetchError("Could not fetch the products")

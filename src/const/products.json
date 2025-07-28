@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "brand": "Apple",
+        "category": "Phones",
+        "price": 936.34,
+        "description": "Get ready to be blown away by this incredible phone that combines style, performance and cutting-edge technology. It's a game changer!.",
+        "model": "iPhone 14 Pro Max",
+        "starRating": 5,
+        "storage": [
+            {
+                "128": 0
+            },
+            {
+                "256": 100
+            }
+        ],
+        "colors": [
+            {
+                "purple": "https://raw.githubusercontent.com/kwamedanso/productsDataAPI/main/allProducts/phones/iphone14pro-purple.png"
+            },
+            {
+                "black": "https://raw.githubusercontent.com/kwamedanso/productsDataAPI/main/allProducts/phones/iphone14pro_black.png"
+            },
+            {
+                "white": "https://raw.githubusercontent.com/kwamedanso/productsDataAPI/main/allProducts/phones/iphone14pro_white.png"
+            },
+            {
+                "yellow": "https://raw.githubusercontent.com/kwamedanso/productsDataAPI/main/allProducts/phones/iphone14pro-yellow.png"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "brand": "Apple",
+        "category": "Phones",
+        "price": 248.82,
+        "description": "Get ready to be blown away by this incredible phone that combines style, performance and cutting-edge technology. It's a game changer!.",
+        "model": "iPhone 14",
+        "starRating": 4.2,
+        ...
+    },
+    ...
+]

@@ -7,7 +7,7 @@ export default function AvailableProducts({ availableProducts, category }) {
     return (
         <>
             <div className={` ${category ? "similar-products" : "available-products"}`}>
-                {availableProducts?.map(product => (
+                {availableProducts?.map((product) => (
                     <ProductCard key={product?.id} {...product} />
                 ))}
             </div>
