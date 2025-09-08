@@ -28,10 +28,8 @@ export default function Favorites({ active, setActiveFavorites }) {
                     throw new Error("Unable to Fetch favorites.")
                 }
                 const data = await response.json();
-                console.log(data)
                 setFetchError(null)
                 let favoriteProduct = data.filter((product) => favorites.includes(product.id))
-                console.log(favoriteProduct)
                 setAllProducts(favoriteProduct)
 
             } catch (error) {

@@ -18,29 +18,52 @@ export default function Cart() {
     let value = useContext(Context)
     let { state: { cartVariants }, actions: { setCartVariants } } = value;
 
-
     useEffect(() => {
         let cartProductIds = []
         for (let i = 0; i < cartVariants.length; i++) {
             cartProductIds.push(cartVariants[i].id)
         }
-        const fetchData = async () => {
-            //Fetch all items available in the cart IDs.
-            const { data, error } = useFetch();
-
-            if (error) {
-                console.log("Could not fetch data")
-
-                setFetchError(error)
-                setAllProducts(null)
-            } else {
-                setFetchError(null)
-                setAllProducts(data)
+        // console.log(cartProductIds)
+        async function fetchCartProducts() {
+            try {
+                const response = await fetch("/allProducts.json");
+                if (!response.ok) {
+                    console.log("Unable to fetch fetch the cart items.")
+                }
+                const data = await response.json();
+                let cartProductList = data.filter((product) => cartProductIds.includes(product.id))
+                setAllProducts(cartProductList)
+            } catch (error) {
+                console.log(error.message)
             }
         }
 
-        fetchData();
+        // console.log(cartVariants)
+        fetchCartProducts();
     }, [cartVariants])
+
+    // useEffect(() => {
+    //     let cartProductIds = []
+    //     for (let i = 0; i < cartVariants.length; i++) {
+    //         cartProductIds.push(cartVariants[i].id)
+    //     }
+    //     const fetchData = async () => {
+    //         //Fetch all items available in the cart IDs.
+    //         const { data, error } = useFetch();
+
+    //         if (error) {
+    //             console.log("Could not fetch data")
+
+    //             setFetchError(error)
+    //             setAllProducts(null)
+    //         } else {
+    //             setFetchError(null)
+    //             setAllProducts(data)
+    //         }
+    //     }
+
+    //     fetchData();
+    // }, [cartVariants])
 
 
     function removeFromCart(id) {

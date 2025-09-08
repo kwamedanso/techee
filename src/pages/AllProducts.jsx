@@ -32,7 +32,6 @@ export default function AllProducts() {
         }
         fetchProducts();
     }, [allProducts])
-    console.log(allProducts)
 
 
 

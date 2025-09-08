@@ -16,50 +16,72 @@ import useFetch from 'hooks/useFetch';
 export default function Main({ productId }) {
     const [currentProduct, setCurrentProduct] = useState(null);
     const [sameCategory, setSameCategory] = useState(null);
-    const [fetchError, setFetchError] = useState(null)
+    // const [fetchError, setFetchError] = useState(null)
     const [currentImage, setCurrentImage] = useState(null)
     const [currentPrice, setCurrentPrice] = useState(null)
     const [variantInfo, setVariantInfo] = useState({ color: "", storage: "" })
 
-
-    const fetchSameCategory = async (category) => {
-        //Fetch four items in the same category as the current item not including the current item. 
-        const { data } = useFetch()
-        if (error) {
-            setFetchError("Could not fetch the products")
-            setSameCategory(null)
-            console.log(error)
-        } else {
-            setSameCategory(data)
-            setFetchError(null)
-        }
-
-    }
-
-
     useEffect(() => {
-        //Fetch the item with id of productId.
-        const fetchProduct = async () => {
-            const { data, error } = useFetch()
+        async function fetchProducts() {
+            try {
+                const response = await fetch("/allProducts.json");
+                if (!response.ok) {
+                    throw new Error("Unable to fetch products");
+                }
+                const data = await response.json()
+                let allProducts = data;
+                let myCurrent = allProducts.filter(product => product.id == productId).at(0)
+                let sameCat = allProducts.filter(product => product.category == myCurrent.category).slice(0, 4)
+                setCurrentImage(Object.values(myCurrent.colors[0]).at(0))
+                setCurrentPrice(myCurrent.price)
+                setCurrentProduct(myCurrent)
+                setSameCategory([...sameCat])
+                // setFilteredProducts(data)
+            } catch (error) {
 
-            if (error) {
-                setFetchError("Could not fetch the products")
-                setCurrentProduct(null)
-                console.log(error)
-
-            } else {
-                setCurrentProduct(data[0])
-                setCurrentImage(data[0].images[0])
-                setCurrentPrice(data[0].price)
-                setFetchError(null)
-
-                fetchSameCategory(data[0].category);
             }
         }
-
-        fetchProduct();
-        setVariantInfo({ color: "", storage: "" })
+        fetchProducts();
     }, [productId])
+
+    // const fetchSameCategory = async (category) => {
+    //     //Fetch four items in the same category as the current item not including the current item. 
+    //     const { data } = useFetch()
+    //     if (error) {
+    //         setFetchError("Could not fetch the products")
+    //         setSameCategory(null)
+    //         console.log(error)
+    //     } else {
+    //         setSameCategory(data)
+    //         setFetchError(null)
+    //     }
+
+    // }
+
+
+    // useEffect(() => {
+    //     //Fetch the item with id of productId.
+    //     const fetchProduct = async () => {
+    //         const { data, error } = useFetch()
+
+    //         if (error) {
+    //             setFetchError("Could not fetch the products")
+    //             setCurrentProduct(null)
+    //             console.log(error)
+
+    //         } else {
+    //             setCurrentProduct(data[0])
+    //             setCurrentImage(data[0].images[0])
+    //             setCurrentPrice(data[0].price)
+    //             setFetchError(null)
+
+    //             fetchSameCategory(data[0].category);
+    //         }
+    //     }
+
+    //     fetchProduct();
+    //     setVariantInfo({ color: "", storage: "" })
+    // }, [productId])
 
 
     function handleImageSetting(img) {
