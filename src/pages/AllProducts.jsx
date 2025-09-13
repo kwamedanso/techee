@@ -8,13 +8,12 @@ import "components/products/styles/allProducts.css"
 import AllFilters from 'components/products/AllFilters'
 import Loader from 'components/shared/Loader'
 import { RxCross2 } from "react-icons/rx";
-import useFetch from 'hooks/useFetch'
 
 export default function AllProducts() {
     const [searchParams, setSearchParams] = useSearchParams();
+    const [allProducts, setAllProducts] = useState([])
     const [filteredProducts, setFilteredProducts] = useState(null);
 
-    let allProducts = null;
 
     useEffect(() => {
         async function fetchProducts() {
@@ -24,23 +23,22 @@ export default function AllProducts() {
                     throw new Error("Unable to fetch products");
                 }
                 const data = await response.json()
-                allProducts = data;
-                setFilteredProducts(data)
+                setAllProducts(data)
             } catch (error) {
 
             }
         }
         fetchProducts();
-    }, [allProducts])
+    }, [])
 
 
 
-    const search = searchParams.get("search")
+    const search = searchParams.get("search")?.toLocaleLowerCase() || "";
     const page = Number(searchParams.get("page")) || 1
-    const brand = searchParams.get("brand")
-    const category = searchParams.get("category")
-    const minPrice = searchParams.get("minPrice") || ""
-    const maxPrice = searchParams.get("maxPrice") || ""
+    const brand = searchParams.get("brand")?.toLocaleLowerCase() || "";
+    const category = searchParams.get("category")?.toLocaleLowerCase() || "";
+    const minPrice = Number(searchParams.get("minPrice")) || 0
+    const maxPrice = Number(searchParams.get("maxPrice")) || Infinity
 
 
     const postsPerPage = 15;
@@ -52,46 +50,22 @@ export default function AllProducts() {
 
 
     useEffect(() => {
-        if (search) {
-            let products = allProducts?.filter(product => product?.brand.toLowerCase().includes(search.toLowerCase()) || product?.category.toLowerCase().includes(search.toLowerCase()) || product?.model.toLowerCase().includes(search.toLowerCase()));
-            let finalProducts = priceFilter(products)
-            setFilteredProducts(finalProducts);
-        } else if (brand && !category) {
-            let products = allProducts?.filter(product => product?.brand.toLowerCase() === brand.toLowerCase())
-            let finalProducts = priceFilter(products)
-            setFilteredProducts(finalProducts);
-        } else if (category && !brand) {
-            let products = allProducts?.filter(product => product?.category.toLowerCase() === category.toLowerCase())
-            let finalProducts = priceFilter(products)
-            setFilteredProducts(finalProducts);
-        } else if (category && brand) {
-            let products = allProducts?.filter(product => product?.brand.toLowerCase() === brand.toLowerCase() && product?.category.toLowerCase() === category.toLowerCase());
-            let finalProducts = priceFilter(products)
-            setFilteredProducts(finalProducts);
-        }
-        else {
-            const finalProducts = priceFilter(allProducts)
-            setFilteredProducts(finalProducts)
-        }
-    }, [search, brand, category, allProducts, minPrice, maxPrice])
+        const newFilteredProducts = allProducts?.filter((product) => {
+            const matchesSearch = search === "" || product?.brand.toLowerCase().includes(search) || product?.category.toLowerCase().includes(search) || product?.model.toLowerCase().includes(search);
 
+            const matchesBrand = brand === "" || product.brand.toLowerCase() === brand;
 
+            const matchesCategory = category === "" || product.category.toLowerCase() === category;
 
-    function priceFilter(arr) {
-        if (minPrice && !maxPrice) {
-            return arr?.filter(product => product.price > Number(minPrice))
-        } else if (!minPrice && maxPrice) {
-            return arr?.filter(product => product.price < Number(maxPrice))
-        } else if (minPrice && maxPrice) {
-            if (Number(minPrice) > Number(maxPrice)) {
-                return []
-            } else {
-                return arr?.filter(product => product.price > Number(minPrice) && product.price < Number(maxPrice))
-            }
-        } else {
-            return arr
-        }
-    }
+            const matchesPrice = product.price >= minPrice && product.price <= maxPrice;
+
+            return matchesSearch && matchesBrand && matchesCategory && matchesPrice;
+        })
+
+        console.log(newFilteredProducts)
+        setFilteredProducts(newFilteredProducts)
+    }, [searchParams, allProducts])
+
 
 
     // Function to reset currentPage to 1

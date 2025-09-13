@@ -1,14 +1,14 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Loader from 'components/shared/Loader';
 import Context from 'context';
 import "components/checkout/styles/checkout.css"
 import ScrollToTop from 'components/shared/ScrollToTop';
 import PaymentInfo from 'components/checkout/PaymentInfo';
 import OrderOverview from "components/checkout/OrderOverview";
-import useFetch from 'hooks/useFetch';
 
 
 export default function Checkout() {
+    const [allProducts, setAllProducts] = useState(null)
     let value = useContext(Context)
     let { state: { cartVariants } } = value;
 
@@ -20,7 +20,29 @@ export default function Checkout() {
 
 
 
-    let { data: allData } = useFetch()
+    useEffect(() => {
+        // console.log(cartProductIds)
+        async function fetchCartProducts() {
+            try {
+                const response = await fetch("/allProducts.json");
+                if (!response.ok) {
+                    console.log("Unable to fetch fetch the cart items.")
+                }
+                const data = await response.json();
+                let cartProductList = data.filter((product) => cartProductIds.includes(product.id))
+                setAllProducts(cartProductList)
+            } catch (error) {
+                console.log(error.message)
+            }
+        }
+
+        // console.log(cartVariants)
+        fetchCartProducts();
+    }, [cartVariants])
+
+    console.log(allProducts)
+
+    // let { data: allData } = useFetch()
 
 
 
@@ -30,11 +52,11 @@ export default function Checkout() {
             <div className='section-margin checkout-page'>
                 <p className='fs-600 fw-semi-bold'>Checkout</p>
 
-                {allData ? (
+                {allProducts ? (
                     <>
                         <div className='checkout-grid margin-block-600'>
                             <PaymentInfo />
-                            <OrderOverview allData={allData} cartVariants={cartVariants} />
+                            <OrderOverview allData={allProducts} cartVariants={cartVariants} />
                         </div>
                     </>) : <Loader />
                 }

@@ -10,7 +10,6 @@ import { RxCross2, RxCrossCircled } from "react-icons/rx"
 
 export default function Favorites({ active, setActiveFavorites }) {
     const [allProducts, setAllProducts] = useState(null)
-    const [fetchError, setFetchError] = useState(null)
     let value = useContext(Context);
     let { state: { favorites, toastNotification }, actions: { setFavorites } } = value;
 
@@ -23,12 +22,11 @@ export default function Favorites({ active, setActiveFavorites }) {
             try {
                 const response = await fetch("/allProducts.json")
                 if (!response.ok) {
-                    setFetchError("Unable to fectch favorites")
+                    console.log("Unable to fectch favorites")
                     setAllProducts(null)
                     throw new Error("Unable to Fetch favorites.")
                 }
                 const data = await response.json();
-                setFetchError(null)
                 let favoriteProduct = data.filter((product) => favorites.includes(product.id))
                 setAllProducts(favoriteProduct)
 

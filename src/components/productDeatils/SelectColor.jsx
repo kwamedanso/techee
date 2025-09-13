@@ -24,7 +24,7 @@ export default function SelectColor({ colors, handleImageSetting, images, varian
 
                     {colors?.map((color, index) => (
                         <button key={Object.keys(color).at(0)}
-                            className={`color ${currentColor == Object.keys(color) ? "active" : null}`}
+                            className={`color ${currentColor === Object.keys(color) ? "active" : null}`}
                             style={{ backgroundColor: `${Object.keys(color)}` }}
                             onClick={() => handleColorSetting(color, index)}
                             title={Object.keys(color)}

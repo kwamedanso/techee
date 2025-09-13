@@ -7,14 +7,12 @@ import Loader from 'components/shared/Loader';
 import ScrollToTop from 'components/shared/ScrollToTop';
 import { GiShoppingCart } from "react-icons/gi";
 import { Link } from 'react-router-dom';
-import useFetch from 'hooks/useFetch';
 
 
 
 
 export default function Cart() {
     const [allProducts, setAllProducts] = useState(null)
-    const [fetchError, setFetchError] = useState(null)
     let value = useContext(Context)
     let { state: { cartVariants }, actions: { setCartVariants } } = value;
 

@@ -11,12 +11,10 @@ import AvailableProducts from 'components/shared/AvailableProducts';
 import ScrollToTop from 'components/shared/ScrollToTop';
 import AddToCart from 'components/productDeatils/AddToCart';
 import Loader from 'components/shared/Loader';
-import useFetch from 'hooks/useFetch';
 
 export default function Main({ productId }) {
     const [currentProduct, setCurrentProduct] = useState(null);
     const [sameCategory, setSameCategory] = useState(null);
-    // const [fetchError, setFetchError] = useState(null)
     const [currentImage, setCurrentImage] = useState(null)
     const [currentPrice, setCurrentPrice] = useState(null)
     const [variantInfo, setVariantInfo] = useState({ color: "", storage: "" })
@@ -30,15 +28,15 @@ export default function Main({ productId }) {
                 }
                 const data = await response.json()
                 let allProducts = data;
-                let myCurrent = allProducts.filter(product => product.id == productId).at(0)
-                let sameCat = allProducts.filter(product => product.category == myCurrent.category).slice(0, 4)
+                let myCurrent = allProducts.filter((product) => product.id === productId).at(0)
+                let sameCat = allProducts.filter(product => product.category === myCurrent.category).slice(0, 4)
                 setCurrentImage(Object.values(myCurrent.colors[0]).at(0))
                 setCurrentPrice(myCurrent.price)
                 setCurrentProduct(myCurrent)
                 setSameCategory([...sameCat])
                 // setFilteredProducts(data)
             } catch (error) {
-
+                console.log(error)
             }
         }
         fetchProducts();

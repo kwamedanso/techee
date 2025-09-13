@@ -4,7 +4,7 @@ import Main from 'components/productDeatils/Main';
 
 export default function ProductDetails() {
     const params = useParams();
-    const productId = params.id;
+    const productId = Number(params.id);
 
 
     return (
