@@ -17,7 +17,7 @@ export default function Main({ productId }) {
     const [sameCategory, setSameCategory] = useState(null);
     const [currentImage, setCurrentImage] = useState(null)
     const [currentPrice, setCurrentPrice] = useState(null)
-    const [variantInfo, setVariantInfo] = useState({ color: "", storage: "" })
+    const [variantInfo, setVariantInfo] = useState({ color: "", storage: "128" })
 
     useEffect(() => {
         async function fetchProducts() {
