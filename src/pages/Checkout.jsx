@@ -21,7 +21,6 @@ export default function Checkout() {
 
 
     useEffect(() => {
-        // console.log(cartProductIds)
         async function fetchCartProducts() {
             try {
                 const response = await fetch("/allProducts.json");
@@ -35,15 +34,8 @@ export default function Checkout() {
                 console.log(error.message)
             }
         }
-
-        // console.log(cartVariants)
         fetchCartProducts();
     }, [cartVariants])
-
-    console.log(allProducts)
-
-    // let { data: allData } = useFetch()
-
 
 
     return (
