@@ -42,45 +42,6 @@ export default function Main({ productId }) {
         fetchProducts();
     }, [productId])
 
-    // const fetchSameCategory = async (category) => {
-    //     //Fetch four items in the same category as the current item not including the current item. 
-    //     const { data } = useFetch()
-    //     if (error) {
-    //         setFetchError("Could not fetch the products")
-    //         setSameCategory(null)
-    //         console.log(error)
-    //     } else {
-    //         setSameCategory(data)
-    //         setFetchError(null)
-    //     }
-
-    // }
-
-
-    // useEffect(() => {
-    //     //Fetch the item with id of productId.
-    //     const fetchProduct = async () => {
-    //         const { data, error } = useFetch()
-
-    //         if (error) {
-    //             setFetchError("Could not fetch the products")
-    //             setCurrentProduct(null)
-    //             console.log(error)
-
-    //         } else {
-    //             setCurrentProduct(data[0])
-    //             setCurrentImage(data[0].images[0])
-    //             setCurrentPrice(data[0].price)
-    //             setFetchError(null)
-
-    //             fetchSameCategory(data[0].category);
-    //         }
-    //     }
-
-    //     fetchProduct();
-    //     setVariantInfo({ color: "", storage: "" })
-    // }, [productId])
-
 
     function handleImageSetting(img) {
         setCurrentImage(img)

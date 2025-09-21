@@ -62,7 +62,6 @@ export default function AllProducts() {
             return matchesSearch && matchesBrand && matchesCategory && matchesPrice;
         })
 
-        console.log(newFilteredProducts)
         setFilteredProducts(newFilteredProducts)
     }, [searchParams, allProducts])
 

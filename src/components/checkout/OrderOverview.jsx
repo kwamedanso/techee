@@ -12,7 +12,6 @@ export default function OrderOverview({ allData, cartVariants }) {
                         {allData?.map((product) => {
                             const cartVariant = cartVariants.find(variant => variant.id === product.id);
 
-                            console.log(cartVariant)
                             if (!cartVariant) {
                                 return null;
                             }
