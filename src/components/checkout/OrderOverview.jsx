@@ -12,6 +12,7 @@ export default function OrderOverview({ allData, cartVariants }) {
                         {allData?.map((product) => {
                             const cartVariant = cartVariants.find(variant => variant.id === product.id);
 
+                            console.log(cartVariant)
                             if (!cartVariant) {
                                 return null;
                             }
@@ -33,25 +34,25 @@ export default function OrderOverview({ allData, cartVariants }) {
 
                                     <div className='cart-item__color_storage margin-block-100'>
                                         <div className='cart-item-border'>
-                                            <span className='fw-semi-bold' title={cartVariants?.find(item => item.id === product?.id)?.color}>Color:</span>
+                                            <span className='fw-semi-bold' title={cartVariant.color}>Color:</span>
                                             <div
                                                 className='cart-item__color'
-                                                style={{ backgroundColor: cartVariants.find(item => item.id === product?.id)?.color }}
-                                                title={cartVariants.find(item => item.id === product?.id)?.color}
+                                                style={{ backgroundColor: cartVariant.color }}
+                                                title={cartVariant.color}
                                             ></div>
                                         </div>
 
                                         {product.storage && <p className='cart-item-border'>
                                             <span className='fw-semi-bold'>Size:</span>
-                                            {cartVariants.find(item => item.id === product?.id)?.storage} GB
+                                            {cartVariant.storage} GB
                                         </p>}
                                     </div>
 
                                     <div className='cart-item_fle'>
-                                        <p className='fw-semi-bold fs-300'>${product?.price}</p>
+                                        <p className='fw-semi-bold fs-300'>${product?.price * cartVariant.quantity}</p>
                                         <p className='flex ai-center' style={{ gap: ".3rem" }}>
                                             <span>Quantity:</span>
-                                            <span className='fw-semi-bold'>{cartVariants.find(item => item.id === product?.id)?.quantity}</span>
+                                            <span className='fw-semi-bold'>{cartVariant.quantity}</span>
                                         </p>
                                     </div>
 
